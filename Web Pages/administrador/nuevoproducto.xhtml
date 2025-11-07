@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view>
+        <!-- Verificación de sesión -->
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{usuarioBean.verifSesion}" />
+        </f:metadata>
+
+        <h:head>
+            <title>Nuevo Producto</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+            <h:outputStylesheet library="css" name="dashboardusuarios.css" />
+
+            <style>
+                :root {
+                    --primary-dark: #15803d;
+                    --secondary: #6b7280;
+                    --secondary-dark: #4b5563;
+                    --danger: #dc3545;
+                    --danger-dark: #c82333;
+                    --light: #f8fafc;
+                    --dark: #1e293b;
+                    --gray: #64748b;
+                    --border: #e2e8f0;
+                    --shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+                    --radius: 12px;
+                }
+
+                * {
+                    box-sizing: border-box;
+                }
+
+                body {
+                    font-family: 'Montserrat', sans-serif;
+                    background-color: #f5f5f5;
+                    margin: 0;
+                    padding: 0;
+                }
+
+                .sidebar {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 260px;
+                    height: 100vh;
+                    background: linear-gradient(180deg, #2c3e50, #34495e);
+                    color: white;
+                    padding: 20px 0;
+                    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+                    z-index: 1000;
+                }
+
+                .sidebar-header {
+                    text-align: center;
+                    margin-bottom: 30px;
+                    padding: 0 15px;
+                }
+
+                .sidebar-header img {
+                    max-width: 80px;
+                    margin-bottom: 10px;
+                }
+
+                .sidebar-header span {
+                    display: block;
+                    font-weight: 600;
+                    font-size: 14px;
+                    color: white;
+                }
+
+                .sidebar-menu a {
+                    display: flex;
+                    align-items: center;
+                    padding: 12px 15px;
+                    color: #ecf0f1;
+                    text-decoration: none;
+                    margin: 5px 0;
+                    border-radius: 6px;
+                    transition: all 0.3s ease;
+                }
+
+                .sidebar-menu a:hover,
+                .sidebar-menu a.active {
+                    background-color: rgba(255,255,255,0.1);
+                    color: white;
+                }
+
+                .sidebar-menu i {
+                    width: 20px;
+                    margin-right: 10px;
+                    text-align: center;
+                }
+
+                .sidebar-footer {
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    padding: 15px;
+                    text-align: center;
+                    border-top: 1px solid rgba(255,255,255,0.2);
+                    background-color: rgba(0,0,0,0.1);
+                }
+
+                .user-info {
+                    margin-bottom: 1rem;
+                    padding: 10px;
+                    border-radius: 8px;
+                    background-color: rgba(255,255,255,0.05);
+                }
+
+                .user-info h4 {
+                    margin: 0 0 5px 0;
+                    font-size: 14px;
+                    font-weight: 500;
+                    color: #94a3b8;
+                }
+
+                .user-info strong {
+                    font-size: 16px;
+                    color: white;
+                }
+
+                .main-content {
+                    margin-left: 280px;
+                    padding: 30px;
+                    min-height: 100vh;
+                }
+
+                .page-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 30px;
+                    padding-bottom: 15px;
+                    border-bottom: 1px solid var(--border);
+                }
+
+                .page-title {
+                    font-size: 28px;
+                    font-weight: 700;
+                    color: var(--dark);
+                    margin: 0;
+                }
+
+                .user-badge {
+                    display: flex;
+                    align-items: center;
+                    background: white;
+                    padding: 10px 20px;
+                    border-radius: 50px;
+                    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+                    font-weight: 600;
+                    color: var(--dark);
+                }
+
+                .user-badge i {
+                    margin-right: 8px;
+                    color: var(--primary);
+                }
+
+                .form-container {
+                    background: white;
+                    border-radius: var(--radius);
+                    padding: 40px;
+                    box-shadow: var(--shadow);
+                    max-width: 900px;
+                    margin: 0 auto;
+                }
+
+                .form-title {
+                    text-align: center;
+                    color: var(--dark);
+                    font-size: 26px;
+                    font-weight: 700;
+                    margin-bottom: 10px;
+                }
+
+                .form-subtitle {
+                    text-align: center;
+                    color: var(--gray);
+                    margin-bottom: 30px;
+                    font-size: 15px;
+                }
+
+                .form-grid {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 25px;
+                }
+
+                .form-group {
+                    margin-bottom: 20px;
+                }
+
+                .full-width {
+                    grid-column: 1 / -1;
+                }
+
+                .form-label {
+                    display: block;
+                    margin-bottom: 8px;
+                    font-weight: 600;
+                    color: var(--dark);
+                    font-size: 14px;
+                }
+
+                .ui-inputfield, .ui-selectonemenu {
+                    width: 100% !important;
+                    border: 1px solid var(--border) !important;
+                    border-radius: 8px !important;
+                    padding: 12px 15px !important;
+                    font-family: 'Montserrat', sans-serif !important;
+                    transition: all 0.3s ease !important;
+                }
+
+                .ui-inputfield:focus, .ui-selectonemenu:focus {
+                    border-color: var(--primary) !important;
+                    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1) !important;
+                    outline: none !important;
+                }
+
+                .ui-inputtextarea {
+                    width: 100% !important;
+                    border: 1px solid var(--border) !important;
+                    border-radius: 8px !important;
+                    padding: 12px 15px !important;
+                    font-family: 'Montserrat', sans-serif !important;
+                    resize: vertical !important;
+                }
+
+                .ui-button {
+                    font-family: 'Montserrat', sans-serif !important;
+                    font-weight: 600 !important;
+                    border: none !important;
+                    border-radius: 8px !important;
+                    padding: 12px 24px !important;
+                    transition: all 0.3s ease !important;
+                    box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
+                }
+
+                .ui-button:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 8px rgba(0,0,0,0.15) !important;
+                }
+
+                .button-group {
+                    display: flex;
+                    justify-content: center;
+                    gap: 15px;
+                    margin-top: 30px;
+                }
+
+                .btn-primary {
+                    background: linear-gradient(135deg, var(--primary), var(--primary-dark)) !important;
+                    color: white !important;
+                }
+
+                .btn-secondary {
+                    background: linear-gradient(135deg, var(--secondary), var(--secondary-dark)) !important;
+                    color: white !important;
+                }
+
+
+            </style>
+        </h:head>
+
+        <h:body>
+            <p:growl id="mensajes" showDetail="true" life="4000" />
+
+            <!-- SIDEBAR -->
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <h:graphicImage library="img" name="download.png" alt="Logo"/>
+                    <h3>HOMECOPY<br/>J&amp;D</h3>
+                </div>
+
+                <div class="sidebar-menu">
+                    <h:link outcome="/admin.xhtml"><i class="fas fa-home"></i><span>Dashboard</span></h:link>
+                    <h:link outcome="/administrador/inventario.xhtml" styleClass="active"><i class="fas fa-box"></i><span>Inventario</span></h:link>
+                    <h:link outcome="/administrador/proveedores.xhtml"><i class="fas fa-truck"></i><span>Proveedores</span></h:link>
+                    <h:link outcome="/administrador/categorias.xhtml"><i class="fas fa-tags"></i><span>Categorías</span></h:link>
+                    <h:link outcome="/administrador/usuarios.xhtml"><i class="fas fa-users"></i><span>Usuarios</span></h:link>
+                </div>
+
+                <div class="sidebar-footer">
+                    <div class="user-info">
+                        <h4>Bienvenido</h4>
+                        <strong>#{sessionScope.user}</strong>
+                    </div>
+
+                    <h:form>
+                        <h:commandLink action="#{usuarioBean.cerrarSesion}" 
+                                       style="display:block;text-align:center;background:linear-gradient(135deg,var(--danger),var(--danger-dark));
+                                       color:white;padding:12px;border-radius:8px;text-decoration:none;font-weight:500;transition:all 0.3s ease;">
+                            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                        </h:commandLink>
+                    </h:form>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <!-- Page Header con información del usuario -->
+                <div class="page-header">
+                    <h1 class="page-title">Nuevo Producto</h1>
+                    <div class="user-badge">
+                        <i class="fas fa-user-circle"></i>
+                        Registrado por: #{sessionScope.user}
+                    </div>
+                </div>
+
+                <div class="form-container">
+                    <h1 class="form-title">Nuevo Producto</h1>
+                    <p class="form-subtitle">Complete la información del nuevo producto del inventario</p>
+
+                    <h:form id="formInventario">
+
+                        <div class="form-grid">
+
+                            <!-- Nombre -->
+                            <div class="form-group full-width">
+                                <h:outputLabel for="nombre" value="Nombre del Producto *" styleClass="form-label"/>
+                                <p:inputText id="nombre" value="#{inventarioBean.nuevoInventario.nombre}"
+                                             required="true" maxlength="100"
+                                             placeholder="Ingrese el nombre del producto"/>
+                                <p:message for="nombre" style="color:red;font-size:12px"/>
+                            </div>
+
+                            <!-- Descripción -->
+                            <div class="form-group full-width">
+                                <h:outputLabel for="descripcion" value="Descripción" styleClass="form-label"/>
+                                <p:inputTextarea id="descripcion" value="#{inventarioBean.nuevoInventario.descripcion}"
+                                                 maxlength="150" rows="3"
+                                                 placeholder="Descripción del producto (opcional)"/>
+                            </div>
+
+                            <!-- Precio -->
+                            <div class="form-group">
+                                <h:outputLabel for="precio" value="Precio *" styleClass="form-label"/>
+                                <p:inputNumber id="precio" value="#{inventarioBean.nuevoInventario.precio}"
+                                               required="true" symbol="$" decimalPlaces="2"
+                                               placeholder="0.00"/>
+                                <p:message for="precio" style="color:red;font-size:12px"/>
+                            </div>
+
+                            <!-- Cantidad -->
+                            <div class="form-group">
+                                <h:outputLabel for="cantidad" value="Cantidad *" styleClass="form-label"/>
+                                <p:inputNumber id="cantidad" value="#{inventarioBean.nuevoInventario.cantidad}"
+                                               required="true" minValue="0"/>
+                                <p:message for="cantidad" style="color:red;font-size:12px"/>
+                            </div>
+
+                            <!-- Categoría -->
+                            <div class="form-group">
+                                <h:outputLabel for="categoria" value="Categoría" styleClass="form-label"/>
+                                <p:selectOneMenu id="categoria" value="#{inventarioBean.nuevoInventario.idCategoria}">
+                                    <f:selectItem itemLabel="Seleccione categoría..." itemValue="#{null}" noSelectionOption="true"/>
+                                    <f:selectItems value="#{inventarioBean.listaCategorias}" var="cat"
+                                                   itemLabel="#{cat.nombre}" itemValue="#{cat.id}"/>
+                                </p:selectOneMenu>
+                            </div>
+
+                            <!-- Proveedor -->
+                            <div class="form-group">
+                                <h:outputLabel for="proveedor" value="Proveedor" styleClass="form-label"/>
+                                <p:selectOneMenu id="proveedor" value="#{inventarioBean.nuevoInventario.idProveedor}">
+                                    <f:selectItem itemLabel="Seleccione proveedor..." itemValue="#{null}" noSelectionOption="true"/>
+                                    <f:selectItems value="#{inventarioBean.listaProveedores}" var="prov"
+                                                   itemLabel="#{prov.nombre}" itemValue="#{prov.id}"/>
+                                </p:selectOneMenu>
+                            </div>
+
+                            <!-- Fecha de Caducidad -->
+                            <div class="form-group">
+                                <h:outputLabel for="fechaCaducidad" value="Fecha de Caducidad" styleClass="form-label"/>
+                                <p:datePicker id="fechaCaducidad" value="#{inventarioBean.nuevoInventario.fechaCaducidad}"
+                                              pattern="yyyy-MM-dd" showIcon="true"/>
+                            </div>
+
+                            <!-- Estado -->
+                            <div class="form-group">
+                                <h:outputLabel for="estado" value="Estado" styleClass="form-label"/>
+                                <p:selectOneMenu id="estado" value="#{inventarioBean.nuevoInventario.estado}">
+                                    <f:selectItem itemLabel="Seleccione estado..." itemValue="" noSelectionOption="true"/>
+                                    <f:selectItem itemLabel="ACTIVO" itemValue="ACTIVO"/>
+                                    <f:selectItem itemLabel="PRIVADO" itemValue="PRIVADO"/>
+                                    <f:selectItem itemLabel="AGOTADO" itemValue="AGOTADO"/>
+                                </p:selectOneMenu>
+                            </div>
+
+                            <!-- Observaciones -->
+                            <div class="form-group full-width">
+                                <h:outputLabel for="observaciones" value="Observaciones" styleClass="form-label"/>
+                                <p:inputTextarea id="observaciones" value="#{inventarioBean.nuevoInventario.observaciones}"
+                                                 rows="3" maxlength="200"
+                                                 placeholder="Notas u observaciones (opcional)"/>
+                            </div>
+
+                            <!-- Foto -->
+                            <div class="form-group full-width">
+                                <h:outputLabel for="foto" value="Imagen (opcional)" styleClass="form-label"/>
+                                <p:inputText id="foto" value="#{inventarioBean.nuevoInventario.foto}"
+                                             maxlength="100" placeholder="ejemplo.jpg"/>
+                            </div>
+                        </div>
+
+                        <div class="button-group">
+                            <p:commandButton value="Guardar Producto"
+                                             action="#{inventarioBean.registrarInventario}"
+                                             icon="pi pi-save"
+                                             update="mensajes formInventario"
+                                             process="@form"
+                                             styleClass="btn-primary"/>
+
+                            <p:button value="Cancelar"
+                                      outcome="/administrador/inventario.xhtml"
+                                      styleClass="btn-secondary"/>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </h:body>
+    </f:view>
+</html>

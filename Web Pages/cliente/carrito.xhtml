@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      lang="es"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<f:view>
+
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{usuarioBean.verifSesion}" />
+    </f:metadata>
+
+    <h:head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Carrito | HomeCopy Papeleria</title>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+        <h:outputStylesheet library="css" name="dashboardusuarios.css"/>
+        <style>
+            body {
+                font-family: 'Montserrat', sans-serif;
+                background-color: #f0f2f5;
+                margin:0;
+            }
+            .main-content {
+                margin-left: 250px;
+                padding: 30px 40px;
+            }
+            h1 {
+                text-align: center;
+                color: #2c3e50;
+                margin-bottom: 30px;
+            }
+
+            .productos-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                gap: 30px;
+                justify-items: center;
+                margin-bottom: 40px;
+            }
+            .producto-card {
+                background: linear-gradient(135deg, #ffffff, #f9f9f9);
+                border-radius: 15px;
+                padding: 20px;
+                box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+                text-align: center;
+                transition: transform 0.3s, box-shadow 0.3s;
+                width: 100%;
+                max-width: 220px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+            .producto-card:hover {
+                transform: translateY(-6px);
+                box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+            }
+            .producto-card h3 {
+                margin: 12px 0 5px;
+                font-size: 18px;
+                color: #34495e;
+            }
+            .producto-card h4 {
+                margin-bottom: 15px;
+                color: #27ae60;
+                font-weight: 700;
+                font-size: 16px;
+            }
+
+            .producto-card img {
+                border-radius: 12px;
+                margin-bottom: 12px;
+                object-fit: cover;
+                width: 100%;
+                height: 150px;
+            }
+
+            .btn-primary {
+                background: linear-gradient(135deg, #3a7bd5, #00d2ff);
+                color: #fff;
+                font-weight: 600;
+                border-radius: 8px;
+                padding: 10px;
+                width: 100%;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+                transition: all 0.3s;
+                margin-top: auto;
+            }
+            .btn-primary:hover {
+                background: linear-gradient(135deg, #1d4b8f, #00a1cc);
+                transform: translateY(-2px);
+                box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+            }
+
+            .btn-danger {
+                background-color: #dc3545;
+                color: #fff;
+                border-radius: 6px;
+                padding: 5px 10px;
+            }
+            .btn-danger:hover {
+                background-color: #a71d2a;
+            }
+
+            .btn-success {
+                background-color: #28a745;
+                color: #fff;
+                width: 100%;
+                padding: 10px 15px;
+                border-radius: 8px;
+            }
+            .btn-success:hover {
+                background-color: #1c7430;
+            }
+
+            .ui-panel {
+                background-color: #fff;
+                border-radius: 15px;
+                padding: 25px;
+                box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            }
+            .carrito-table .ui-datatable-data > tr > td {
+                padding: 10px 5px;
+            }
+            .carrito-table th {
+                background-color: #f7f9fc;
+                text-align: center;
+                font-weight: 600;
+            }
+
+            h:panelGrid {
+                margin-top: 20px;
+            }
+
+            @media (max-width: 768px) {
+                .main-content {
+                    margin-left: 0;
+                    padding: 20px;
+                }
+                .productos-grid {
+                    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                }
+            }
+        </style>
+    </h:head>
+
+    <h:body>
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h:graphicImage library="img" name="download.png" alt="Logo" styleClass="logo"/>
+                <span>HomeCopy Papeleria</span>
+            </div>
+            <div class="sidebar-menu">
+                <!-- Dashboard -->
+                <h:link outcome="/cliente.xhtml" styleClass="sidebar-link">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </h:link>
+
+                <!-- Pedidos / Carrito -->
+                <h:link outcome="/cliente/carrito.xhtml"  styleClass="menu-item active">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Pedidos</span>
+                </h:link>
+
+                <h:form>
+                    <h:commandLink action="#{usuarioBean.cerrarSesion}" styleClass="nav-link">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Cerrar Sesión</span>
+                    </h:commandLink>
+                </h:form>
+            </div>
+        </div>
+
+
+        <div class="main-content">
+            <h:form id="formCarrito">
+
+                <h1>Productos Disponibles</h1>
+
+                <div class="productos-grid">
+                    <ui:repeat value="#{compraBean.productos}" var="prod">
+                        <p:panel styleClass="producto-card">
+                            <h:graphicImage value="/images/#{prod.foto}" />
+                            <h3>#{prod.nombre}</h3>
+                            <h4>$#{prod.precio}</h4>
+                            <p:spinner value="#{compraBean.cantidadSeleccionada}" min="1" max="#{prod.stock}" style="width:60px; margin-bottom:10px;"/>
+                            <p:commandButton value="Agregar al carrito" icon="pi pi-shopping-cart"
+                                             action="#{compraBean.agregarProductoAlCarrito(prod)}"
+                                             update=":formCarrito:tablaCarrito :formCarrito:msgs"
+                                             styleClass="btn btn-primary"/>
+                        </p:panel>
+                    </ui:repeat>
+                </div>
+
+                <p:messages id="msgs" showDetail="true" closable="true"/>
+
+                <p:panel header="Mi Carrito" styleClass="card">
+                    <p:dataTable id="tablaCarrito" value="#{compraBean.carrito}" var="c" 
+                                 paginator="true" rows="5" styleClass="carrito-table"
+                                 emptyMessage="No tienes productos en tu carrito">
+
+                        <p:column headerText="Producto">#{c.producto.nombre}</p:column>
+                        <p:column headerText="Cantidad" style="text-align:center;">#{c.cantidad}</p:column>
+                        <p:column headerText="Precio Unitario" style="text-align:right;">
+                            <h:outputText value="#{c.producto.precio}"><f:convertNumber pattern="$#,##0.00"/></h:outputText>
+                        </p:column>
+                        <p:column headerText="Total" style="text-align:right; font-weight:bold; color:#27ae60;">
+                            <h:outputText value="#{c.precioTotal}"><f:convertNumber pattern="$#,##0.00"/></h:outputText>
+                        </p:column>
+                        <p:column headerText="Acciones" style="text-align:center;">
+                            <p:commandButton value="Eliminar" icon="pi pi-trash" 
+                                             action="#{compraBean.eliminarDelCarrito(c)}"
+                                             update=":formCarrito:tablaCarrito :formCarrito:msgs"
+                                             styleClass="btn btn-danger"
+                                             onclick="return confirm('¿Eliminar este producto del carrito?');"/>
+                        </p:column>
+                    </p:dataTable>
+
+                    <h:panelGrid columns="2" style="margin-top:15px;">
+                        <h:outputText value="Total Acumulado:" style="font-weight:bold; font-size:16px;"/>
+                        <h:outputText value="#{compraBean.totalCarrito}" style="font-weight:bold; font-size:16px;">
+                            <f:convertNumber pattern="$#,##0.00"/>
+                        </h:outputText>
+                    </h:panelGrid>
+
+                    <!-- Botones debajo del resumen -->
+                    <div style="margin-top:15px; display:flex; gap:15px; justify-content:center; flex-wrap:wrap;">
+                        <p:commandButton value="Guardar Compra" icon="pi pi-save" 
+                                         action="#{compraBean.realizarPago}" 
+                                         styleClass="btn btn-success"
+                                         style="width:150px; font-size:16px; padding:10px 0; border-radius:8px;"
+                                         rendered="#{not empty compraBean.carrito}"
+                                         update="@form"/>
+
+                        <p:commandButton value="Factura PDF" 
+                                         icon="pi pi-file-pdf"
+                                         ajax="false"
+                                         actionListener="#{compraBean.exportarPDF}"
+                                         style="background-color:#dc3545; color:white; border:none; border-radius:6px; padding:8px 16px;" />
+                    </div>
+
+                </p:panel>  
+            </h:form>
+        </div>
+    </h:body>
+
+</f:view>
+</html>

@@ -1,0 +1,245 @@
+/* theme.css - Estilos personalizados para la página de acceso denegado y temas generales del dashboard */
+/* Inspirado en Bootstrap y PrimeFaces para un look moderno y profesional */
+
+/* Reset y configuraciones generales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f8f9fa; /* Fondo gris claro para páginas de error */
+}
+
+/* Layout principal para páginas centradas (como noacceso.xhtml) */
+.layout {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Contenido principal para páginas de error o centradas */
+.main-content {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 50px;
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+}
+
+.main-content h1 {
+    color: #dc3545; /* Rojo para títulos de error */
+    margin-bottom: 10px;
+    font-size: 2.5em;
+    font-weight: 300;
+}
+
+.main-content p {
+    font-size: 18px;
+    color: #6c757d;
+    margin-bottom: 40px;
+}
+
+/* Estilos para iconos (asumiendo Font Awesome) */
+.fas {
+    display: block;
+    margin: 0 auto 20px;
+}
+
+.fas.fa-exclamation-triangle {
+    font-size: 100px;
+    color: #dc3545;
+}
+
+/* Botones personalizados (mejora para PrimeFaces buttons) */
+.ui-button {
+    background-color: #007bff !important;
+    border: none !important;
+    color: white !important;
+    padding: 12px 30px !important;
+    font-size: 16px !important;
+    border-radius: 5px !important;
+    transition: background-color 0.3s ease !important;
+}
+
+.ui-button:hover {
+    background-color: #0056b3 !important;
+    color: white !important;
+}
+
+.ui-button.ui-button-info {
+    background-color: #007bff !important;
+}
+
+/* Estilos para el sidebar (reutilizables del dashboard original) */
+.sidebar {
+    width: 250px;
+    background-color: #343a40;
+    color: white;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    overflow-y: auto;
+}
+
+.sidebar-header {
+    padding: 20px;
+    border-bottom: 1px solid #495057;
+    text-align: center;
+}
+
+.logo {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+}
+
+.sidebar-header span {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.sidebar-menu {
+    padding: 20px 0;
+}
+
+.menu-item {
+    display: block;
+    padding: 15px 20px;
+    color: #adb5bd;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.menu-item:hover,
+.menu-item.active {
+    background-color: #495057;
+    color: white;
+}
+
+.menu-item i {
+    margin-right: 10px;
+    width: 20px;
+}
+
+.sidebar-footer {
+    padding: 20px;
+    border-top: 1px solid #495057;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.nav-link {
+    display: block;
+    padding: 10px;
+    color: #adb5bd;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.nav-link:hover {
+    background-color: #495057;
+    color: white;
+}
+
+/* Contenido principal del dashboard (reutilizable) */
+.main-content.dashboard {
+    margin-left: 250px;
+    padding: 20px;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+}
+
+.main-content.dashboard h1 {
+    color: #343a40;
+    margin-bottom: 10px;
+}
+
+.main-content.dashboard p {
+    color: #6c757d;
+    margin-bottom: 20px;
+}
+
+/* Tablas y formularios (estilos generales para PrimeFaces) */
+.ui-datatable {
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+}
+
+.ui-datatable .ui-datatable-header {
+    background-color: #007bff;
+    color: white;
+    padding: 15px;
+    font-weight: bold;
+}
+
+.ui-button {
+    margin: 5px;
+    border-radius: 5px !important;
+}
+
+/* Colores para botones específicos (del dashboard original) */
+.btn-verde {
+    background-color: #28a745 !important;
+    color: white !important;
+}
+
+.btn-rojo {
+    background-color: #dc3545 !important;
+    color: white !important;
+}
+
+.btn-amarillo {
+    background-color: #ffc107 !important;
+    color: black !important;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .layout {
+        padding: 10px;
+    }
+    
+    .main-content {
+        padding: 30px 20px;
+        margin: 20px;
+    }
+    
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+    
+    .main-content.dashboard {
+        margin-left: 0;
+    }
+    
+    .fas.fa-exclamation-triangle {
+        font-size: 80px;
+    }
+    
+    .main-content h1 {
+        font-size: 2em;
+    }
+}
+
+/* Animaciones suaves */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.main-content {
+    animation: fadeIn 0.5s ease-out;
+}

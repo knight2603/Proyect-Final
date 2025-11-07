@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      lang="es">
+
+    <f:view>
+
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{usuarioBean.verifSesion}" />
+        </f:metadata>
+
+        <h:head>
+            <!-- Fuentes y estilos externos -->
+            <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+            <h:outputStylesheet library="css" name="dashboardusuarios.css" />
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <title>Enviar Correo</title>
+            <style>
+                body {
+                    font-family: 'Montserrat', sans-serif;
+                    background-color: #f4f4f4;
+                }
+
+                .main-content {
+                    margin-left: 250px; /* Ajusta según el ancho de tu sidebar */
+                    padding: 30px;
+                }
+
+                h1 {
+                    color: #1c1c1c;
+                    margin-bottom: 30px;
+                }
+
+                /* Panel principal */
+                .correo-form {
+                    background: #fff;
+                    padding: 25px;
+                    border-radius: 12px;
+                    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+                }
+
+                /* Campos del formulario */
+                .correo-form .field-group {
+                    margin-bottom: 20px;
+                }
+
+                .correo-form label {
+                    font-weight: 600;
+                    margin-bottom: 6px;
+                    display: block;
+                }
+
+                p:inputText, p:inputTextarea, p:selectManyMenu {
+                    width: 100%;
+                    padding: 8px;
+                    border-radius: 6px;
+                    border: 1px solid #ccc;
+                    box-sizing: border-box;
+                }
+
+                /* Botones */
+                .correo-buttons {
+                    margin-top: 20px;
+                    display: flex;
+                    justify-content: flex-end;
+                    gap: 15px;
+                }
+
+                .ui-commandbutton.enviar {
+                    background-color: #28a745 !important; /* Verde */
+                    color: white;
+                    border-radius: 6px;
+                    padding: 10px 20px;
+                    font-weight: 500;
+                    transition: background 0.3s ease;
+                }
+
+                .ui-commandbutton.enviar:hover {
+                    background-color: #218838 !important;
+                }
+
+                .ui-commandbutton.cancelar {
+                    background-color: #dc3545 !important; /* Rojo */
+                    color: white;
+                    border-radius: 6px;
+                    padding: 10px 20px;
+                    font-weight: 500;
+                    transition: background 0.3s ease;
+                }
+
+                .ui-commandbutton.cancelar:hover {
+                    background-color: #c82333 !important;
+                }
+
+                /* Botones seleccionar todos y ninguno */
+                .select-buttons {
+                    display: flex;
+                    gap: 10px;
+                    margin-top: 8px;
+                }
+
+                .select-buttons .ui-button {
+                    padding: 5px 10px;
+                    font-size: 14px;
+                    border-radius: 5px;
+                }
+                .ui-commandbutton.enviar {
+                    background-color: #28a745 !important; /* Verde */
+                    color: white;
+                    border-radius: 6px;
+                    padding: 10px 20px;
+                    font-weight: 500;
+                }
+
+                .ui-commandbutton.cancelar {
+                    background-color: #dc3545 !important; /* Rojo */
+                    color: white;
+                    border-radius: 6px;
+                    padding: 10px 20px;
+                    font-weight: 500;
+                }
+
+
+            </style>
+        </h:head>
+
+        <h:body>
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <h:graphicImage library="img" name="download.png" alt="Logo" styleClass="logo"/>
+                    <span>HOMECOPY PAPELERIA J&amp;D</span>
+                </div>
+                <div class="sidebar-menu">
+                    <h:link outcome="/admin.xhtml" styleClass="menu-item">
+                        <i class="fas fa-home"></i>
+                        <h:outputText value="Dashboard"/>
+                    </h:link>
+                    <h:link outcome="/administrador/usuarios.xhtml" >
+                        <i class="fas fa-users"></i>
+                        <h:outputText value="Usuarios"/>
+                    </h:link>
+                    <h:link outcome="/administrador/correos.xhtml" styleClass="menu-item active">
+                        <i class="fas fa-envelope"></i>
+                        <h:outputText value="Correos"/>
+                    </h:link>
+                    <h:link outcome="/administrador/inventario.xhtml" styleClass="menu-item">
+                        <i class="fas fa-box"></i>
+                        <h:outputText value="Inventario"/>
+                    </h:link>
+                </div>
+                <div class="sidebar-footer">
+                    
+                <h:form>
+                    <h:commandLink action="#{usuarioBean.cerrarSesion}" styleClass="nav-link">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Cerrar Sesión</span>
+                    </h:commandLink>
+                </h:form>
+                </div>
+            </div>  
+
+            <div class="main-content">
+                <p:growl id="msj" showDetail="true" showSummary="true" />
+                <f:event type="preRenderView" listener="#{correoBean.listarUsuarios()}" />
+
+                <h1>Envío de Correos</h1>
+                <p>Envia de manera masiva y/o persona a persona correos</p>
+                <br/><br/>
+                <div class="correo-form">
+                    <h:form>
+
+                        <!-- Destinatarios -->
+                        <div class="field-group">
+                            <p:outputLabel value="Destinatarios" />
+                            <p:selectManyMenu value="#{correoBean.dest}" showCheckbox="true" widgetVar="dests"
+                                              required="true" requiredMessage="Debe seleccionar Usuarios">
+                                <f:selectItems value="#{correoBean.listaUsuarios}" var="usr" itemLabel=" #{usr.nombre}" itemValue="#{usr.correo}" />
+                            </p:selectManyMenu>
+
+                            <div class="select-buttons">
+                                <p:commandButton value="T" onclick="PF('dests').selectAll()" />
+                                <p:commandButton value="N" onclick="PF('dests').unselectAll()" />
+                            </div>
+                        </div>
+
+                        <!-- Asunto -->
+                        <div class="field-group">
+                            <p:outputLabel value="Asunto" />
+                            <p:inputText value="#{correoBean.asunto}" size="30" 
+                                         required="true" requiredMessage="Debe escribir un asunto" />
+                        </div>
+
+                        <!-- Mensaje -->
+                        <div class="field-group">
+                            <p:outputLabel value="Mensaje" />
+                            <p:inputTextarea value="#{correoBean.contenido}" rows="10" cols="35" />
+                        </div>
+
+                        <!-- Botones -->
+                        <div class="correo-buttons">
+                            <p:commandButton value="Enviar" ajax="false" actionListener="#{correoBean.enviarCorreo()}" styleClass="enviar" />
+                            <p:commandButton value="Cancelar" ajax="false" immediate="true" action="/admin" styleClass="cancelar" />
+
+                        </div>
+
+                    </h:form>
+                </div>
+            </div>
+        </h:body>
+
+    </f:view>
+</html>

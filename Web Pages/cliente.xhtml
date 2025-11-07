@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      lang="es">
+
+    <f:view>
+
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{usuarioBean.verifSesion}" />
+        </f:metadata>
+
+        <h:head>
+            <meta charset="UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <title>Historial de Compras | HomeCopy Papelería</title>
+            <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+            <h:outputStylesheet library="css" name="dashboardusuarios.css"/>
+        </h:head>
+
+        <h:body>
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <h:graphicImage library="img" name="download.png" alt="Logo" styleClass="logo"/>
+                    <span>HomeCopy Papeleria</span>
+                </div>
+                <div class="sidebar-menu">
+                    <!-- Dashboard -->
+                    <h:link outcome="/cliente.xhtml" styleClass="sidebar-link active">
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
+                    </h:link>
+
+                    <!-- Carrito / Pedidos -->
+                    <h:link outcome="/cliente/carrito.xhtml" styleClass="sidebar-link">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Pedidos</span>
+                    </h:link>
+                    <h:form>
+                        <h:commandLink action="#{usuarioBean.cerrarSesion}" styleClass="nav-link">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Cerrar Sesión</span>
+                        </h:commandLink>
+                    </h:form>
+                </div>
+            </div>
+
+            <!-- Contenido principal -->
+            <div class="main-content">
+                <h1>Bienvenido Cliente, #{sessionScope.user}</h1>
+                <h1>Historial de Compras</h1>
+
+                <h:form id="formHistorial">
+                    <p:messages id="msgs" showDetail="true" closable="true"/>
+
+                    <p:panel header="Historial de Pedidos" styleClass="card">
+                        <p:dataTable id="tablaPedidos" value="#{pedidoBean.pedidos}" var="p"
+                                     paginator="true" rows="10" styleClass="recent-orders"
+                                     emptyMessage="No tienes pedidos registrados">
+
+                            <p:column headerText="ID Pedido" style="text-align:center;">
+                                #{p.id}
+                            </p:column>
+
+                            <p:column headerText="Producto">
+                                #{p.compra.producto.nombre} <!-- <- Ajuste aplicado -->
+                            </p:column>
+
+                            <p:column headerText="Cantidad" style="text-align:center;">
+                                #{p.compra.cantidad}
+                            </p:column>
+
+                            <p:column headerText="Precio Unitario" style="text-align:right;">
+                                <h:outputText value="#{p.compra.precioTotal / p.compra.cantidad}">
+                                    <f:convertNumber pattern="$#,##0.00"/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column headerText="Total" style="text-align:right; font-weight:bold; color:#27ae60;">
+                                <h:outputText value="#{p.total}">
+                                    <f:convertNumber pattern="$#,##0.00"/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column headerText="Fecha de Pedido" style="text-align:center;">
+                                <h:outputText value="#{p.fechaPedido}">
+                                    <f:convertDateTime pattern="yyyy-MM-dd"/>
+                                </h:outputText>
+                            </p:column>
+
+                        </p:dataTable>
+                    </p:panel>
+                </h:form>
+            </div>
+        </h:body>
+
+    </f:view>
+</html>
+

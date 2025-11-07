@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Gestión de Categorías</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <h:outputStylesheet library="css" name="dashboardusuarios.css"/>
+    
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 260px;
+            height: 100vh;
+            background: linear-gradient(180deg, #2c3e50, #34495e);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        
+        .sidebar-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 0 15px;
+        }
+        
+        .sidebar-header img {
+            max-width: 80px;
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-header span {
+            display: block;
+            font-weight: 600;
+            font-size: 14px;
+            color: white;
+        }
+        
+        .sidebar-menu {
+            padding: 0 15px;
+        }
+        
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            color: #ecf0f1;
+            text-decoration: none;
+            margin: 5px 0;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-menu a:hover,
+        .sidebar-menu a.active {
+            background-color: rgba(255,255,255,0.1);
+            color: white;
+        }
+        
+        .sidebar-menu i {
+            width: 20px;
+            margin-right: 10px;
+            text-align: center;
+        }
+        
+        .sidebar-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 15px;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            background-color: rgba(0,0,0,0.1);
+        }
+        
+        .user-info h3 {
+            margin: 0 0 5px 0;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        .user-info h4 {
+            margin: 0;
+            color: #ecf0f1;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .main-content {
+            margin-left: 260px;
+            padding: 30px;
+            min-height: 100vh;
+        }
+        
+        .action-button {
+            background: linear-gradient(135deg, #16a34a, #15803d);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .action-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            background: linear-gradient(135deg, #15803d, #166534);
+        }
+        
+        .btn-edit {
+            background: linear-gradient(135deg, #0ea5e9, #0284c7);
+            border: none;
+            color: white;
+            border-radius: 6px;
+            padding: 6px 12px;
+            margin-right: 5px;
+        }
+        
+        .btn-delete {
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            border: none;
+            color: white;
+            border-radius: 6px;
+            padding: 6px 12px;
+        }
+        
+        .btn-edit:hover {
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+        }
+        
+        .btn-delete:hover {
+            background: linear-gradient(135deg, #b91c1c, #991b1b);
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</h:head>
+
+<h:body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h:graphicImage library="img" name="download.png" alt="Logo"/>
+            <span>HOMECOPY PAPELERIA J&amp;D</span>
+        </div>
+
+        <div class="sidebar-menu">
+            <h:link outcome="/admin.xhtml">
+                <i class="fas fa-home"></i><span>Dashboard</span>
+            </h:link>
+            <h:link outcome="/administrador/inventario.xhtml">
+                <i class="fas fa-box"></i><span>Inventario</span>
+            </h:link>
+            <h:link outcome="/administrador/proveedores.xhtml">
+                <i class="fas fa-truck"></i><span>Proveedores</span>
+            </h:link>
+            <h:link outcome="/administrador/categorias.xhtml" styleClass="active">
+                <i class="fas fa-tags"></i><span>Categorías</span>
+            </h:link>
+            <h:link outcome="/administrador/usuarios.xhtml">
+                <i class="fas fa-users"></i><span>Usuarios</span>
+            </h:link>
+            <h:link outcome="/administrador/correos.xhtml">
+                <i class="fas fa-envelope"></i><span>Correos</span>
+            </h:link>
+        </div>
+
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <h4>Administrador #{sessionScope.user}</h4>
+            </div>
+
+            <h:form>
+                <h:commandLink action="#{usuarioBean.cerrarSesion}" 
+                               style="display:inline-block;background:linear-gradient(135deg, #dc3545, #c82333);color:white;
+                               padding:8px 16px;border-radius:6px;text-decoration:none;font-weight:500;"
+                               onmouseover="this.style.background = 'linear-gradient(135deg, #c82333, #a71e2a)'"
+                               onmouseout="this.style.background = 'linear-gradient(135deg, #dc3545, #c82333)'">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span style="margin-left:6px;">Cerrar Sesión</span>
+                </h:commandLink>
+            </h:form>
+        </div>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="main-content">
+
+        <!-- Mensajes -->
+        <p:growl id="mensajes" showDetail="true" life="4000"/>
+
+        <div class="card">
+            <div class="header-section">
+                <div>
+                    <h1 style="color:#1f2937; font-size:28px; margin:0;">Gestión de Categorías</h1>
+                    <p style="color:#6b7280; margin:5px 0 0 0;">Administra las categorías de productos del sistema</p>
+                </div>
+                
+                <!-- Botón Agregar Nueva Categoría -->
+                <p:button value="Agregar Nueva Categoría"
+                         outcome="/administrador/nuevacat.xhtml"
+                         icon="pi pi-plus"
+                         styleClass="action-button" />
+            </div>
+
+            <!-- Tabla de Categorías -->
+            <h:form id="tablaCategoriasForm">
+                <p:dataTable value="#{categoriasBean.listaCategorias}" var="cat"
+                             paginator="true" rows="10"
+                             styleClass="p-datatable-striped p-datatable-sm"
+                             emptyMessage="No hay categorías registradas."
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15"
+                             currentPageReportTemplate="Mostrando {startRecord} a {endRecord} de {totalRecords} categorías">
+
+                    <p:column headerText="ID" style="width:80px; text-align:center;">
+                        <h:outputText value="#{cat.id}" />
+                    </p:column>
+
+                    <p:column headerText="Nombre" style="width:200px;">
+                        <h:outputText value="#{cat.nombre}" />
+                    </p:column>
+
+                    <p:column headerText="Descripción">
+                        <h:outputText value="#{cat.descripcion}" />
+                    </p:column>
+
+                    <p:column headerText="Acciones" style="width:150px; text-align:center;">
+                        <p:commandButton icon="pi pi-pencil" 
+                                         title="Editar"
+                                         ajax="false"
+                                         styleClass="btn-edit" />
+
+                        <p:commandButton icon="pi pi-trash" 
+                                         title="Eliminar"
+                                         action="#{categoriasBean.eliminarCategoria(cat.id)}"
+                                         update=":tablaCategoriasForm :mensajes"
+                                         styleClass="btn-delete"
+                                         onclick="if(!confirm('¿Está seguro de eliminar la categoría #{cat.nombre}?')) return false;" />
+                    </p:column>
+
+                </p:dataTable>
+            </h:form>
+        </div>
+
+    </div>
+
+</h:body>
+</html>

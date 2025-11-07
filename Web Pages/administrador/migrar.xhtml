@@ -1,0 +1,132 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <h:outputStylesheet library="css" name="dashboardusuarios.css"/>
+    <title>Migración de Usuarios</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .migracion-container {
+            max-width: 600px;
+            margin: 60px auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .migracion-container h1 {
+            text-align: center;
+            color: #000000; /* Migración de Usuarios en negro */
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        .migracion-buttons {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .migracion-buttons .ui-button {
+            margin: 0 10px;
+            font-size: 16px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            color: white;
+        }
+
+        /* Colores personalizados */
+        .ui-fileupload-button {
+            background-color: #1e90ff !important; /* Azul selector de archivo */
+            color: white !important;
+            border-radius: 6px;
+        }
+
+        .ui-button-cargar {
+            background-color: #28a745 !important; /* Verde */
+        }
+
+        .ui-button-regresar {
+            background-color: #dc3545 !important; /* Rojo */
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h:graphicImage library="img" name="download.png" alt="Logo" styleClass="logo"/>
+            <span>HOMECOPY PAPELERIA J&amp;D</span>
+        </div>
+
+        <div class="sidebar-menu">
+            <h:link outcome="/admin.xhtml" styleClass="menu-item">
+                <i class="fas fa-home"></i>
+                <h:outputText value="Dashboard"/>
+            </h:link>
+
+            <h:link outcome="/administrador/usuarios.xhtml" styleClass="menu-item active">
+                <i class="fas fa-users"></i>
+                <h:outputText value="Usuarios"/>
+            </h:link>
+
+            <h:link outcome="/administrador/correos.xhtml">
+                <i class="fas fa-envelope"></i>
+                <h:outputText value="Correos"/>
+            </h:link>
+
+            <h:link outcome="/administrador/inventario.xhtml" >
+                <i class="fas fa-box"></i>
+                <h:outputText value="Inventario"/>
+            </h:link>
+        </div>
+
+        <div class="sidebar-footer">
+            <a href="#" class="user-info">
+                <i class="fas fa-user"></i>
+                <span>#{usuarioBean.usuario.nombre}</span>
+            </a>
+        </div>
+    </div>
+
+    <p:growl id="msj" showDetail="true" showSummary="true" />
+
+    <div class="migracion-container">
+        <h:form enctype="multipart/form-data">
+            <h1>Migración de Usuarios</h1>
+
+            <!-- Selector de archivo → Azul -->
+            <p:fileUpload value="#{usuarioBean.excel}" 
+                          mode="simple" 
+                          skinSimple="true" 
+                          required="true"
+                          label="Seleccionar archivo" 
+                          requiredMessage="Debe especificar un archivo"
+                          style="font-size: 16px; padding: 6px; width: 100%;"
+                          styleClass="ui-fileupload-button" />
+
+            <div class="migracion-buttons">
+                <!-- Cargar usuarios → Verde -->
+                <p:commandButton ajax="false" value="Cargar usuarios"
+                                 actionListener="#{usuarioBean.migrar}" 
+                                 styleClass="ui-button-cargar"/>
+
+                <!-- Regresar → Rojo -->
+                <p:commandButton ajax="false" value="Regresar" immediate="true"
+                                 action="usuarios" styleClass="ui-button-regresar"/>
+            </div>
+        </h:form>
+    </div>
+</h:body>
+</html>

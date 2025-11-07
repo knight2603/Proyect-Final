@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      lang="es">
+
+    <f:view>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{usuarioBean.verifSesion}" />
+        </f:metadata>
+
+        <h:head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <title>Usuarios | HomeCopy J&amp;D</title>
+
+            <!-- Fuentes y estilos -->
+            <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+            <h:outputStylesheet library="css" name="dashboardusuarios.css" />
+        </h:head>
+
+        <h:body>
+            <div class="layout">
+
+                <!-- Sidebar -->
+                <div class="sidebar">
+                    <div class="sidebar-header">
+                        <h:graphicImage library="img" name="download.png" alt="Logo" styleClass="logo"/>
+                        <span>HOMECOPY PAPELERÍA J&amp;D</span>
+                    </div>
+
+                    <div class="sidebar-menu">
+                        <h:link outcome="/admin.xhtml" styleClass="menu-item">
+                            <i class="fas fa-home"></i>
+                            <h:outputText value="Dashboard"/>
+                        </h:link>
+
+                        <h:link outcome="/administrador/usuarios.xhtml" styleClass="menu-item active">
+                            <i class="fas fa-users"></i>
+                            <h:outputText value="Usuarios"/>
+                        </h:link>
+
+                        <h:link outcome="/administrador/correos.xhtml" styleClass="menu-item">
+                            <i class="fas fa-envelope"></i>
+                            <h:outputText value="Correos"/>
+                        </h:link>
+
+                        <h:link outcome="/administrador/inventario.xhtml" styleClass="menu-item">
+                            <i class="fas fa-box"></i>
+                            <h:outputText value="Inventario"/>
+                        </h:link>
+                    </div>
+
+                    <div class="sidebar-footer">
+                        <h:form>
+                            <h:commandLink action="#{usuarioBean.cerrarSesion}" styleClass="nav-link">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span>Cerrar Sesión</span>
+                            </h:commandLink>
+                        </h:form>
+                    </div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="main-content">
+                    <h1>Gestión de Usuarios</h1>
+                    <p>Lista de usuarios registrados en el sistema</p>
+                    <br/><br/>
+
+                    <!-- Acciones -->
+                    <h:form id="formAcciones">
+                        <br/>
+
+                        <!-- Botones -->
+                        <p:commandButton value="Cargar Usuarios"
+                                         action="migrar"
+                                         ajax="false"
+                                         style="margin-left: 15px; background-color: #28a745; color: white; border: none;" />
+
+
+                        <p:commandButton value="Reporte PDF" 
+                                         ajax="false"
+                                         actionListener="#{usuarioBean.exportarPDF}"
+                                         style="margin-left: 15px; background-color: #dc3545; color: white; border: none;" />
+                    </h:form>
+
+                    <br/><br/>
+
+                    <!-- Tabla de Usuarios -->
+                    <h:form id="formUsuarios">
+                        <p:dataTable id="tblUsuarios"
+                                     value="#{usuarioBean.listaUsuarios}"
+                                     var="u"
+                                     widgetVar="tblUsuariosWV"
+                                     paginator="true" rows="10"
+                                     emptyMessage="No hay usuarios registrados."
+                                     style="width:100%;">
+
+                            <p:ajax event="filter" />
+
+                            <p:column headerText="Cédula" filterBy="#{u.cc}" filterMatchMode="contains">
+                                <h:outputText value="#{u.cc}" />
+                            </p:column>
+
+                            <p:column headerText="Nombre" filterBy="#{u.nombre}" filterMatchMode="contains">
+                                <h:outputText value="#{u.nombre}" />
+                            </p:column>
+
+                            <p:column headerText="Apellido" filterBy="#{u.lastname}" filterMatchMode="contains">
+                                <h:outputText value="#{u.lastname}" />
+                            </p:column>
+
+                            <p:column headerText="Correo" filterBy="#{u.correo}" filterMatchMode="contains">
+                                <h:outputText value="#{u.correo}" />
+                            </p:column>
+
+                            <p:column headerText="Tipo" filterBy="#{u.tipo}" filterMatchMode="contains">
+                                <h:outputText value="#{u.tipo}" />
+                            </p:column>
+
+                            <!-- Acciones -->
+                            <p:column headerText="Acciones" style="text-align:center;">
+                                <p:commandButton value="Editar" 
+                                                 actionListener="#{usuarioBean.editar(u)}" 
+                                                 action="editarusu" 
+                                                 style="background-color: #ffc107; color: black; border: none; margin-right:5px;" />
+
+                                <p:commandButton ajax="false" value="Eliminar"
+                                                 actionListener="#{usuarioBean.eliminar(u)}"
+                                                 onclick="return confirm('¿Está seguro de eliminar este usuario?')"
+                                                 style="background-color: #dc3545; color: white; border: none;" />
+                            </p:column>
+                        </p:dataTable>
+
+                        <p:growl id="msj" showDetail="true" showSummary="true"/>
+                    </h:form>
+                </div>
+            </div>
+        </h:body>
+
+    </f:view>
+</html>

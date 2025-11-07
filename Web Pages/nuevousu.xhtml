@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Registro de Usuario</title>
+        <h:outputStylesheet library="css" name="registro.css" />
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+    </h:head>
+
+    <h:body>
+        <div class="container">
+            <h1>Crear Cuenta</h1>
+            <p>Por favor completa los siguientes datos:</p>
+
+            <h:form id="registro-form">
+
+                <!-- Cedula -->
+                <div class="form-group">
+                    <h:outputLabel for="cc" value="Cédula" />
+                    <h:inputText id="cc" value="#{usuarioBean.usuario.cc}" 
+                                 required="true"
+                                 requiredMessage="La cédula es obligatoria"
+                                 styleClass="input-text"/>
+                </div>
+
+                <!-- Nombre -->
+                <div class="form-group">
+                    <h:outputLabel for="nombre" value="Nombre" />
+                    <h:inputText id="nombre" value="#{usuarioBean.usuario.nombre}" 
+                                 required="true"
+                                 requiredMessage="El nombre es obligatorio"
+                                 styleClass="input-text"/>
+                </div>
+
+                <!-- Apellido -->
+                <div class="form-group">
+                    <h:outputLabel for="lastname" value="Apellido" />
+                    <h:inputText id="lastname" value="#{usuarioBean.usuario.lastname}" 
+                                 required="true"
+                                 requiredMessage="El apellido es obligatorio"
+                                 styleClass="input-text"/>
+                </div>
+
+                <!-- Correo -->
+                <div class="form-group">
+                    <h:outputLabel for="correo" value="Correo electrónico" />
+                    <h:inputText id="correo" value="#{usuarioBean.usuario.correo}" 
+                                 required="true"
+                                 requiredMessage="El correo es obligatorio"
+                                 validator="#{usuarioBean.validarGmail}"
+                                 styleClass="input-text"/>
+                    <h:message for="correo" style="color:red" />
+                </div>
+
+
+                <!-- Contraseña -->
+                <div class="form-group">
+                    <h:outputLabel for="pswd" value="Contraseña" />
+                    <h:inputSecret id="pswd" value="#{usuarioBean.usuario.pswd}" 
+                                   required="true"
+                                   requiredMessage="La contraseña es obligatoria"
+                                   validator="#{usuarioBean.validarContrasena}"
+                                   styleClass="input-password"/>
+                    <h:message for="pswd" style="color:red" />
+                </div>
+
+
+                <!-- Tipo (default Cliente C) -->
+                <h:inputHidden value="#{usuarioBean.usuario.tipo}" />
+
+
+                <!-- Mensajes con PrimeFaces -->
+                <p:growl id="msgs" showDetail="true" life="4000" />
+
+                <!-- Botón de registro -->
+                <h:commandButton value="Registrarse"
+                                 action="#{usuarioBean.registrar}"
+                                 styleClass="btn-register">
+                    <f:ajax execute="@form" render="@form" resetValues="true"/>
+                </h:commandButton>
+
+            </h:form>
+
+            <!-- Links debajo -->
+            <div class="form-links">
+                <p>¿Ya tienes cuenta? 
+                    <h:link value="Inicia sesión" outcome="login.xhtml" />
+                </p>
+            </div>
+        </div>
+    </h:body>
+</html>

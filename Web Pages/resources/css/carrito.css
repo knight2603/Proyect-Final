@@ -1,0 +1,160 @@
+/* =======================
+   Sidebar
+======================= */
+.sidebar {
+    background-color: #1abc9c;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.sidebar-header {
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.sidebar-header img {
+    width: 80px;
+    margin-bottom: 10px;
+    border-radius: 50%;
+}
+
+.sidebar-header span {
+    display: block;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.sidebar-menu {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-menu a {
+    padding: 15px 20px;
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    transition: background 0.3s;
+    font-weight: 500;
+}
+
+.sidebar-menu a i {
+    margin-right: 10px;
+}
+
+.sidebar-menu a:hover,
+.sidebar-menu a.active {
+    background-color: #16a085;
+    border-left: 4px solid #f1c40f;
+}
+
+.sidebar-footer {
+    border-top: 1px solid rgba(255,255,255,0.2);
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-footer a {
+    padding: 12px 20px;
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    transition: background 0.3s;
+}
+
+.sidebar-footer a i {
+    margin-right: 10px;
+}
+
+.sidebar-footer a:hover {
+    background-color: #16a085;
+}
+
+/* =======================
+   DataTable carrito
+======================= */
+.carrito-table .ui-datatable-tablewrapper {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.carrito-table .ui-datatable th {
+    background-color: #2980b9;
+    color: white;
+    font-weight: 600;
+    text-align: center;
+}
+
+.carrito-table .ui-datatable td {
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+    color: #2c3e50;
+}
+
+/* Resaltar filas con totales altos */
+.high-total {
+    background-color: #fef5e7 !important;
+    font-weight: bold;
+}
+
+.normal-total {
+    background-color: #ffffff !important;
+}
+
+/* =======================
+   Panel resumen
+======================= */
+.ui-panel {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.ui-panel h:panelGrid {
+    color: white;
+}
+
+.ui-button-success {
+    background-color: #27ae60 !important;
+    border: none !important;
+    color: white !important;
+}
+
+.ui-button-success:hover {
+    background-color: #2ecc71 !important;
+}
+
+.ui-button-danger {
+    background-color: #c0392b !important;
+    border: none !important;
+    color: white !important;
+}
+
+.ui-button-danger:hover {
+    background-color: #e74c3c !important;
+}
+
+/* =======================
+   General
+======================= */
+body {
+    background-color: #ecf0f1;
+    font-family: 'Montserrat', sans-serif;
+}
+
+h1 {
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+p:panelGrid {
+    font-size: 14px;
+}

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+    <title>Acceso Denegado</title>
+</h:head>
+
+<h:body style="text-align:center; margin-top:100px; font-family:sans-serif;">
+    <h1 style="color:red;">Acceso Denegado</h1>
+    <p>No tienes permisos para acceder a esta página.</p>
+
+    <h:form>
+        <h:commandButton value="Volver al Login"
+                         action="login?faces-redirect=true"
+                         style="background-color:blue;
+                                color:white;
+                                padding:10px 20px;
+                                border:none;
+                                border-radius:5px;
+                                cursor:pointer;" />
+    </h:form>
+</h:body>
+</html>
