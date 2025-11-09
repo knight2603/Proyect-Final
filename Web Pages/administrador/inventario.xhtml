@@ -295,126 +295,112 @@
                             </div>
                         </h:form>
 
-                        <!-- TABLA DE INVENTARIO -->
-                        <h:form id="tablaInventario">
-                            <p:dataTable value="#{inventarioBean.listaInventario}" var="prod"
-                                         paginator="true" rows="10"
-                                         styleClass="p-datatable-striped p-datatable-sm"
-                                         emptyMessage="No hay productos registrados.">
+                        <h:form id="formInventario">
+                            <p:growl id="msj" showDetail="true" />
 
-                                <p:column headerText="ID" style="width:70px;text-align:center;">
-                                    <h:outputText value="#{prod.id}" />
+                            <p:dataTable id="tblProd" value="#{productoBean.listaVistaProductos}" var="p"
+                                         paginator="true" rows="5">
+
+                                <p:column headerText="ID">
+                                    <h:outputText value="#{p[0]}" />
                                 </p:column>
 
                                 <p:column headerText="Nombre">
-                                    <h:outputText value="#{prod.nombre}" />
+                                    <h:outputText value="#{p[1]}" />
                                 </p:column>
 
                                 <p:column headerText="Descripción">
-                                    <h:outputText value="#{prod.descripcion}" />
+                                    <h:outputText value="#{p[2]}" />
                                 </p:column>
 
-                                <p:column headerText="Precio" style="text-align:right;">
-                                    <h:outputText value="#{prod.precio}">
-                                        <f:convertNumber type="currency" currencySymbol="$" />
-                                    </h:outputText>
+                                <p:column headerText="Precio">
+                                    <h:outputText value="#{p[3]}" />
                                 </p:column>
 
-                                <p:column headerText="Stock" style="text-align:center;">
-                                    <h:outputText value="#{prod.stockActual}"
-                                                  styleClass="#{prod.stockActual lt 10 ? 'estado-agotado' : 'estado-activo'}" />
+                                <p:column headerText="Categoría">
+                                    <h:outputText value="#{p[4]}" />
                                 </p:column>
 
-                                <p:column headerText="Estado" style="text-align:center;">
-                                    <h:outputText value="#{prod.estado}" />
+                                <p:column headerText="Stock">
+                                    <h:outputText value="#{p[5]}" />
                                 </p:column>
-                                <p:column headerText="Acciones" style="width:220px; text-align:center;">
 
-                                    <!-- BOTÓN EDITAR -->
+                                <p:column headerText="Fecha de Caducidad">
+                                    <h:outputText value="#{p[6]}" />
+                                </p:column>
+
+                                <p:column headerText="Estado">
+                                    <h:outputText value="#{p[7]}" />
+                                </p:column>
+
+                                <!-- Acciones -->
+                                <p:column headerText="Acciones" style="text-align:center;">
+                                    <!-- Botón Editar -->
                                     <p:commandButton value="Editar"
                                                      icon="pi pi-pencil"
-                                                     title="Editar"
-                                                     styleClass="btn-edit"
-                                                     process="@this"
-                                                     actionListener="#{inventarioBean.seleccionarInventario(prod)}"
-                                                     update=":dialogEditar"
-                                                     oncomplete="PF('dlgEditar').show()" />
+                                                     actionListener="#{productoBean.prepararEdicion(p[0])}"
+                                                     update=":formInventario:dlgEditarProducto :formInventario:msj"
+                                                     oncomplete="PF('dlgEditarProducto').show()" />
 
-                                    <!-- BOTÓN ELIMINAR -->
+
+                                    <!-- Botón Eliminar -->
                                     <p:commandButton value="Eliminar"
                                                      icon="pi pi-trash"
-                                                     title="Eliminar"
-                                                     styleClass="btn-delete"
-                                                     action="#{inventarioBean.eliminar(prod.id)}"
-                                                     update="tablaInventario :mensajes"
-                                                     onclick="return confirm('¿Eliminar el producto #{prod.nombre}?');" />
+                                                     styleClass="btn-danger"
+                                                     actionListener="#{productoBean.eliminarProducto(p[0])}"
+                                                     update=":formInventario:tblProd :formInventario:msj"
+                                                     immediate="true"
+                                                     onclick="return confirm('¿Seguro que desea eliminar este producto?');" />
                                 </p:column>
-
                             </p:dataTable>
-                        </h:form>
 
-                        <!-- 🔹 MODAL EDITAR PRODUCTO -->
-                        <p:dialog id="dialogEditar"
-                                  header="Editar Producto"
-                                  widgetVar="dlgEditar"
-                                  modal="true"
-                                  closable="true"
-                                  draggable="false"
-                                  resizable="false"
-                                  appendTo="@(body)"
-                                  dynamic="false"
-                                  style="width:520px;">
+                            <!-- ✅ Diálogo fuera del DataTable -->
+                            <p:dialog id="dlgEditarProducto" header="Editar Producto"
+                                      widgetVar="dlgEditarProducto" modal="true"
+                                      resizable="false" appendTo="@(body)" width="500">
 
-                            <h:form id="dialogEditarForm">
-                                <h:panelGrid columns="2" cellpadding="6" style="width:100%;">
+                                <h:panelGrid columns="2" cellpadding="5">
 
-                                    <h:outputLabel value="ID:" for="id" />
-                                    <p:inputText id="id" value="#{inventarioBean.inventarioSeleccionado.id}" readonly="true" />
+                                    <h:outputLabel for="nombre" value="Nombre:"/>
+                                    <p:inputText id="nombre" value="#{productoBean.producto.nombre}" required="true"/>
 
-                                    <h:outputLabel value="Nombre:" for="nombre" />
-                                    <p:inputText id="nombre" value="#{inventarioBean.inventarioSeleccionado.nombre}" required="true" />
+                                    <h:outputLabel for="descripcion" value="Descripción:"/>
+                                    <p:inputTextarea id="descripcion" value="#{productoBean.producto.descripcion}" />
 
-                                    <h:outputLabel value="Descripción:" for="descripcion" />
-                                    <p:inputTextarea id="descripcion" value="#{inventarioBean.inventarioSeleccionado.descripcion}" rows="3" autoResize="true" />
+                                    <h:outputLabel for="precio" value="Precio:"/>
+                                    <p:inputNumber id="precio" value="#{productoBean.producto.precio}" required="true" symbol="$" decimalPlaces="2"/>
 
-                                    <h:outputLabel value="Precio:" for="precio" />
-                                    <p:inputNumber id="precio" value="#{inventarioBean.inventarioSeleccionado.precio}" required="true"  />
-
-                                    <h:outputLabel value="Categoría:" for="categoria" />
-                                    <p:selectOneMenu id="categoria"
-                                                     value="#{inventarioBean.inventarioSeleccionado.idCategoria}"
-                                                     rendered="#{not empty inventarioBean.inventarioSeleccionado}">
-                                        <f:selectItem itemLabel="--Seleccionar--" itemValue="#{null}" />
-                                        <f:selectItems value="#{inventarioBean.listaCategorias}" var="cat"
+                                    <h:outputLabel for="categoria" value="Categoría:"/>
+                                    <p:selectOneMenu id="categoria" value="#{productoBean.producto.idCategoria}">
+                                        <f:selectItems value="#{productoBean.listaCategorias}" var="cat"
                                                        itemLabel="#{cat.nombre}" itemValue="#{cat.id}" />
                                     </p:selectOneMenu>
 
-                                    <h:outputLabel value="Estado:" for="estado" />
-                                    <p:selectOneMenu id="estado" value="#{inventarioBean.inventarioSeleccionado.estado}">
-                                        <f:selectItem itemLabel="ACTIVO" itemValue="ACTIVO" />
-                                        <f:selectItem itemLabel="PRIVADO" itemValue="PRIVADO" />
-                                        <f:selectItem itemLabel="AGOTADO" itemValue="AGOTADO" />
+                                    <h:outputLabel for="estado" value="Estado:"/>
+                                    <p:selectOneMenu id="estado" value="#{productoBean.producto.estado}">
+                                        <f:selectItem itemLabel="Seleccione..." itemValue=""/>
+                                        <f:selectItem itemLabel="ACTIVO" itemValue="ACTIVO"/>
+                                        <f:selectItem itemLabel="PRIVADO" itemValue="PRIVADO"/>
+                                        <f:selectItem itemLabel="AGOTADO" itemValue="AGOTADO"/>
                                     </p:selectOneMenu>
-
-                                    <h:outputLabel value="Observaciones:" for="observaciones" />
-                                    <p:inputTextarea id="observaciones" value="#{inventarioBean.inventarioSeleccionado.observaciones}" rows="3" />
                                 </h:panelGrid>
 
-                                <div style="text-align:right; margin-top:15px;">
-                                    <p:commandButton value="Guardar Cambios"
-                                                     icon="pi pi-save"
-                                                     action="#{inventarioBean.actualizarInventario}"
-                                                     update=":tablaInventario :mensajes"
-                                                     oncomplete="PF('dlgEditar').hide()"
-                                                     styleClass="ui-button-success" />
+                                <p:separator/>
 
-                                    <p:commandButton value="Cancelar"
-                                                     icon="pi pi-times"
-                                                     onclick="PF('dlgEditar').hide(); return false;"
-                                                     styleClass="ui-button-secondary" />
-                                </div>
-                            </h:form>
-                        </p:dialog>
+                                <p:commandButton value="Guardar cambios"
+                                                 actionListener="#{productoBean.guardarEdicion}"
+                                                 update=":formInventario:tblProd :formInventario:msj"
+                                                 oncomplete="PF('dlgEditarProducto').hide()"
+                                                 icon="pi pi-check"
+                                                 styleClass="btn-primary"/>
+
+                                <p:commandButton value="Cancelar"
+                                                 onclick="PF('dlgEditarProducto').hide()"
+                                                 type="button"
+                                                 icon="pi pi-times"
+                                                 styleClass="btn-secondary"/>
+                            </p:dialog>
+                        </h:form>
 
                     </div> <!-- 🔹 Cierre de .action-bar -->
                 </div> <!-- 🔹 Cierre de .card -->

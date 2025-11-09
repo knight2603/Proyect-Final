@@ -6,20 +6,13 @@
       xmlns:p="http://primefaces.org/ui">
 
     <f:view>
-        <!-- Verificación de sesión -->
-        <f:metadata>
-            <f:event type="preRenderView" listener="#{usuarioBean.verifSesion}" />
-        </f:metadata>
-
         <h:head>
             <title>Nuevo Producto</title>
             <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
             <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
             <h:outputStylesheet library="css" name="dashboardusuarios.css" />
-
-            <style>
-                :root {
+            <style> :root {
                     --primary-dark: #15803d;
                     --secondary: #6b7280;
                     --secondary-dark: #4b5563;
@@ -32,11 +25,9 @@
                     --shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
                     --radius: 12px;
                 }
-
                 * {
                     box-sizing: border-box;
                 }
-
                 body {
                     font-family: 'Montserrat', sans-serif;
                     background-color: #f5f5f5;
@@ -108,32 +99,27 @@
                     border-top: 1px solid rgba(255,255,255,0.2);
                     background-color: rgba(0,0,0,0.1);
                 }
-
                 .user-info {
                     margin-bottom: 1rem;
                     padding: 10px;
                     border-radius: 8px;
                     background-color: rgba(255,255,255,0.05);
                 }
-
                 .user-info h4 {
                     margin: 0 0 5px 0;
                     font-size: 14px;
                     font-weight: 500;
                     color: #94a3b8;
                 }
-
                 .user-info strong {
                     font-size: 16px;
                     color: white;
                 }
-
                 .main-content {
                     margin-left: 280px;
                     padding: 30px;
                     min-height: 100vh;
                 }
-
                 .page-header {
                     display: flex;
                     justify-content: space-between;
@@ -142,14 +128,12 @@
                     padding-bottom: 15px;
                     border-bottom: 1px solid var(--border);
                 }
-
                 .page-title {
                     font-size: 28px;
                     font-weight: 700;
                     color: var(--dark);
                     margin: 0;
                 }
-
                 .user-badge {
                     display: flex;
                     align-items: center;
@@ -160,12 +144,10 @@
                     font-weight: 600;
                     color: var(--dark);
                 }
-
                 .user-badge i {
                     margin-right: 8px;
                     color: var(--primary);
                 }
-
                 .form-container {
                     background: white;
                     border-radius: var(--radius);
@@ -174,7 +156,6 @@
                     max-width: 900px;
                     margin: 0 auto;
                 }
-
                 .form-title {
                     text-align: center;
                     color: var(--dark);
@@ -182,28 +163,23 @@
                     font-weight: 700;
                     margin-bottom: 10px;
                 }
-
                 .form-subtitle {
                     text-align: center;
                     color: var(--gray);
                     margin-bottom: 30px;
                     font-size: 15px;
                 }
-
                 .form-grid {
                     display: grid;
                     grid-template-columns: 1fr 1fr;
                     gap: 25px;
                 }
-
                 .form-group {
                     margin-bottom: 20px;
                 }
-
                 .full-width {
                     grid-column: 1 / -1;
                 }
-
                 .form-label {
                     display: block;
                     margin-bottom: 8px;
@@ -211,7 +187,6 @@
                     color: var(--dark);
                     font-size: 14px;
                 }
-
                 .ui-inputfield, .ui-selectonemenu {
                     width: 100% !important;
                     border: 1px solid var(--border) !important;
@@ -220,13 +195,11 @@
                     font-family: 'Montserrat', sans-serif !important;
                     transition: all 0.3s ease !important;
                 }
-
                 .ui-inputfield:focus, .ui-selectonemenu:focus {
                     border-color: var(--primary) !important;
                     box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1) !important;
                     outline: none !important;
                 }
-
                 .ui-inputtextarea {
                     width: 100% !important;
                     border: 1px solid var(--border) !important;
@@ -235,7 +208,6 @@
                     font-family: 'Montserrat', sans-serif !important;
                     resize: vertical !important;
                 }
-
                 .ui-button {
                     font-family: 'Montserrat', sans-serif !important;
                     font-weight: 600 !important;
@@ -245,36 +217,29 @@
                     transition: all 0.3s ease !important;
                     box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
                 }
-
                 .ui-button:hover {
                     transform: translateY(-2px);
                     box-shadow: 0 4px 8px rgba(0,0,0,0.15) !important;
                 }
-
                 .button-group {
                     display: flex;
                     justify-content: center;
                     gap: 15px;
                     margin-top: 30px;
                 }
-
                 .btn-primary {
                     background: linear-gradient(135deg, var(--primary), var(--primary-dark)) !important;
                     color: white !important;
                 }
-
                 .btn-secondary {
                     background: linear-gradient(135deg, var(--secondary), var(--secondary-dark)) !important;
                     color: white !important;
                 }
-
-
             </style>
         </h:head>
 
         <h:body>
             <p:growl id="mensajes" showDetail="true" life="4000" />
-
             <!-- SIDEBAR -->
             <div class="sidebar">
                 <div class="sidebar-header">
@@ -306,8 +271,8 @@
                 </div>
             </div>
 
+
             <div class="main-content">
-                <!-- Page Header con información del usuario -->
                 <div class="page-header">
                     <h1 class="page-title">Nuevo Producto</h1>
                     <div class="user-badge">
@@ -318,16 +283,15 @@
 
                 <div class="form-container">
                     <h1 class="form-title">Nuevo Producto</h1>
-                    <p class="form-subtitle">Complete la información del nuevo producto del inventario</p>
+                    <p class="form-subtitle">Complete la información del nuevo producto en el inventario</p>
 
-                    <h:form id="formInventario">
-
+                    <h:form id="formProducto">
                         <div class="form-grid">
 
                             <!-- Nombre -->
                             <div class="form-group full-width">
                                 <h:outputLabel for="nombre" value="Nombre del Producto *" styleClass="form-label"/>
-                                <p:inputText id="nombre" value="#{inventarioBean.nuevoInventario.nombre}"
+                                <p:inputText id="nombre" value="#{productoBean.producto.nombre}"
                                              required="true" maxlength="100"
                                              placeholder="Ingrese el nombre del producto"/>
                                 <p:message for="nombre" style="color:red;font-size:12px"/>
@@ -336,7 +300,7 @@
                             <!-- Descripción -->
                             <div class="form-group full-width">
                                 <h:outputLabel for="descripcion" value="Descripción" styleClass="form-label"/>
-                                <p:inputTextarea id="descripcion" value="#{inventarioBean.nuevoInventario.descripcion}"
+                                <p:inputTextarea id="descripcion" value="#{productoBean.producto.descripcion}"
                                                  maxlength="150" rows="3"
                                                  placeholder="Descripción del producto (opcional)"/>
                             </div>
@@ -344,26 +308,18 @@
                             <!-- Precio -->
                             <div class="form-group">
                                 <h:outputLabel for="precio" value="Precio *" styleClass="form-label"/>
-                                <p:inputNumber id="precio" value="#{inventarioBean.nuevoInventario.precio}"
+                                <p:inputNumber id="precio" value="#{productoBean.producto.precio}"
                                                required="true" symbol="$" decimalPlaces="2"
                                                placeholder="0.00"/>
                                 <p:message for="precio" style="color:red;font-size:12px"/>
                             </div>
 
-                            <!-- Cantidad -->
-                            <div class="form-group">
-                                <h:outputLabel for="cantidad" value="Cantidad *" styleClass="form-label"/>
-                                <p:inputNumber id="cantidad" value="#{inventarioBean.nuevoInventario.cantidad}"
-                                               required="true" minValue="0"/>
-                                <p:message for="cantidad" style="color:red;font-size:12px"/>
-                            </div>
-
                             <!-- Categoría -->
                             <div class="form-group">
                                 <h:outputLabel for="categoria" value="Categoría" styleClass="form-label"/>
-                                <p:selectOneMenu id="categoria" value="#{inventarioBean.nuevoInventario.idCategoria}">
+                                <p:selectOneMenu id="categoria" value="#{productoBean.producto.idCategoria}">
                                     <f:selectItem itemLabel="Seleccione categoría..." itemValue="#{null}" noSelectionOption="true"/>
-                                    <f:selectItems value="#{inventarioBean.listaCategorias}" var="cat"
+                                    <f:selectItems value="#{productoBean.listaCategorias}" var="cat"
                                                    itemLabel="#{cat.nombre}" itemValue="#{cat.id}"/>
                                 </p:selectOneMenu>
                             </div>
@@ -371,9 +327,9 @@
                             <!-- Proveedor -->
                             <div class="form-group">
                                 <h:outputLabel for="proveedor" value="Proveedor" styleClass="form-label"/>
-                                <p:selectOneMenu id="proveedor" value="#{inventarioBean.nuevoInventario.idProveedor}">
+                                <p:selectOneMenu id="proveedor" value="#{productoBean.producto.idProveedor}">
                                     <f:selectItem itemLabel="Seleccione proveedor..." itemValue="#{null}" noSelectionOption="true"/>
-                                    <f:selectItems value="#{inventarioBean.listaProveedores}" var="prov"
+                                    <f:selectItems value="#{productoBean.listaProveedores}" var="prov"
                                                    itemLabel="#{prov.nombre}" itemValue="#{prov.id}"/>
                                 </p:selectOneMenu>
                             </div>
@@ -381,14 +337,14 @@
                             <!-- Fecha de Caducidad -->
                             <div class="form-group">
                                 <h:outputLabel for="fechaCaducidad" value="Fecha de Caducidad" styleClass="form-label"/>
-                                <p:datePicker id="fechaCaducidad" value="#{inventarioBean.nuevoInventario.fechaCaducidad}"
+                                <p:datePicker id="fechaCaducidad" value="#{productoBean.producto.fechaCaducidad}"
                                               pattern="yyyy-MM-dd" showIcon="true"/>
                             </div>
 
                             <!-- Estado -->
                             <div class="form-group">
                                 <h:outputLabel for="estado" value="Estado" styleClass="form-label"/>
-                                <p:selectOneMenu id="estado" value="#{inventarioBean.nuevoInventario.estado}">
+                                <p:selectOneMenu id="estado" value="#{productoBean.producto.estado}">
                                     <f:selectItem itemLabel="Seleccione estado..." itemValue="" noSelectionOption="true"/>
                                     <f:selectItem itemLabel="ACTIVO" itemValue="ACTIVO"/>
                                     <f:selectItem itemLabel="PRIVADO" itemValue="PRIVADO"/>
@@ -396,35 +352,56 @@
                                 </p:selectOneMenu>
                             </div>
 
-                            <!-- Observaciones -->
-                            <div class="form-group full-width">
-                                <h:outputLabel for="observaciones" value="Observaciones" styleClass="form-label"/>
-                                <p:inputTextarea id="observaciones" value="#{inventarioBean.nuevoInventario.observaciones}"
-                                                 rows="3" maxlength="200"
-                                                 placeholder="Notas u observaciones (opcional)"/>
+                            <div class="form-group">
+                                <h:outputLabel for="stockInicial" value="Stock inicial" styleClass="form-label"/>
+                                <p:inputNumber id="stockInicial"
+                                               value="#{productoBean.producto.stockInicial}"
+                                               required="true"
+                                               minValue="0"
+                                               placeholder="Cantidad inicial en inventario"/>
+                                <p:message for="stockInicial" style="color:red;font-size:12px"/>
                             </div>
+
 
                             <!-- Foto -->
                             <div class="form-group full-width">
                                 <h:outputLabel for="foto" value="Imagen (opcional)" styleClass="form-label"/>
-                                <p:inputText id="foto" value="#{inventarioBean.nuevoInventario.foto}"
+                                <p:inputText id="foto" value="#{productoBean.producto.foto}"
                                              maxlength="100" placeholder="ejemplo.jpg"/>
                             </div>
                         </div>
 
                         <div class="button-group">
+                            <!-- Botón que abre el diálogo de confirmación -->
                             <p:commandButton value="Guardar Producto"
-                                             action="#{inventarioBean.registrarInventario}"
                                              icon="pi pi-save"
-                                             update="mensajes formInventario"
-                                             process="@form"
-                                             styleClass="btn-primary"/>
+                                             styleClass="btn-primary"
+                                             type="button"
+                                             onclick="PF('confirmGuardar').show()" />
 
                             <p:button value="Cancelar"
                                       outcome="/administrador/inventario.xhtml"
                                       styleClass="btn-secondary"/>
                         </div>
+
+                        <!-- Diálogo de confirmación -->
+                        <p:confirmDialog widgetVar="confirmGuardar"
+                                         header="Confirmación"
+                                         message="¿Está seguro de guardar este producto?">
+                            <p:commandButton value="Sí, guardar"
+                                             action="#{productoBean.agregarProducto}"
+                                             update="mensajes formProducto"
+                                             oncomplete="PF('confirmGuardar').hide()"
+                                             styleClass="btn-primary"
+                                             icon="pi pi-check" />
+                            <p:commandButton value="Cancelar"
+                                             onclick="PF('confirmGuardar').hide()"
+                                             type="button"
+                                             styleClass="btn-secondary"
+                                             icon="pi pi-times" />
+                        </p:confirmDialog>
                     </h:form>
+
                 </div>
             </div>
         </h:body>
