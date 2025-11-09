@@ -68,14 +68,14 @@ public List<Usuario> listar() {
         }
 
     } catch (SQLException e) {
-        e.printStackTrace(); 
+        e.printStackTrace(); // importante para depuración
     }
 
     return listaUsuarios;
 }
 
 public void eliminar(Usuario usu) {
-    String sql = "DELETE FROM usuarios WHERE cc = ?"; 
+    String sql = "DELETE FROM usuarios WHERE cc = ?"; // tabla correcta y columna CC
     try (Connection conn = ConnBD.conectar();
          PreparedStatement ps = conn.prepareStatement(sql)) {
         
@@ -119,7 +119,7 @@ public Usuario buscar(int cc) {
         try (ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
                 usu = new Usuario();
-                usu.setCc(rs.getInt("cc"));           
+                usu.setCc(rs.getInt("cc"));           // Asegúrate que coincida con tu BD
                 usu.setNombre(rs.getString("nombre"));
                 usu.setLastname(rs.getString("lastname"));
                 usu.setPswd(rs.getString("pswd"));   // Contraseña encriptada
@@ -127,7 +127,7 @@ public Usuario buscar(int cc) {
             }
         }
     } catch (SQLException e) {
-        e.printStackTrace(); // loguear el error
+        e.printStackTrace(); // O loguear el error
     }
 
     return usu;
