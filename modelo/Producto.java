@@ -1,44 +1,27 @@
-
 package modelo;
 
 import java.util.Date;
 
-
 public class Producto {
-    
-    private int id,id_categoria;
-    private String nombre, descripcion, foto, estado;
+
+    private int id;
+    private String nombre;
+    private String descripcion;
     private double precio;
-    private Date fecha_caducidad;
+    private int idCategoria;
+    private int idProveedor;
+    private Date fechaCaducidad;
+    private String estado;
+    private String foto;
+    private int stockInicial;
 
-    public Producto() {
-    }
-
-    public Producto(int id, int id_categoria, String nombre, String descripcion, String foto, String estado, double precio, Date fecha_caducidad) {
-        this.id = id;
-        this.id_categoria = id_categoria;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.foto = foto;
-        this.estado = estado;
-        this.precio = precio;
-        this.fecha_caducidad = fecha_caducidad;
-    }
-
+    // --- Getters y Setters ---
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getId_categoria() {
-        return id_categoria;
-    }
-
-    public void setId_categoria(int id_categoria) {
-        this.id_categoria = id_categoria;
     }
 
     public String getNombre() {
@@ -57,12 +40,36 @@ public class Producto {
         this.descripcion = descripcion;
     }
 
-    public String getFoto() {
-        return foto;
+    public double getPrecio() {
+        return precio;
     }
 
-    public void setFoto(String foto) {
-        this.foto = foto;
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+
+    public int getIdCategoria() {
+        return idCategoria;
+    }
+
+    public void setIdCategoria(int idCategoria) {
+        this.idCategoria = idCategoria;
+    }
+
+    public int getIdProveedor() {
+        return idProveedor;
+    }
+
+    public void setIdProveedor(int idProveedor) {
+        this.idProveedor = idProveedor;
+    }
+
+    public Date getFechaCaducidad() {
+        return fechaCaducidad;
+    }
+
+    public void setFechaCaducidad(Date fechaCaducidad) {
+        this.fechaCaducidad = fechaCaducidad;
     }
 
     public String getEstado() {
@@ -73,22 +80,19 @@ public class Producto {
         this.estado = estado;
     }
 
-    public double getPrecio() {
-        return precio;
+    public String getFoto() {
+        return foto;
     }
 
-    public void setPrecio(double precio) {
-        this.precio = precio;
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 
-    public Date getFecha_caducidad() {
-        return fecha_caducidad;
+    public int getStockInicial() {
+        return stockInicial;
     }
 
-    public void setFecha_caducidad(Date fecha_caducidad) {
-        this.fecha_caducidad = fecha_caducidad;
+    public void setStockInicial(int stockInicial) {
+        this.stockInicial = stockInicial;
     }
-    
-    
-   
 }
