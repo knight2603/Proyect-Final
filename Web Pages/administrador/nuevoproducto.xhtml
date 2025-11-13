@@ -271,7 +271,6 @@
                 </div>
             </div>
 
-
             <div class="main-content">
                 <div class="page-header">
                     <h1 class="page-title">Nuevo Producto</h1>
@@ -283,7 +282,7 @@
 
                 <div class="form-container">
                     <h1 class="form-title">Nuevo Producto</h1>
-                    <p class="form-subtitle">Complete la información del nuevo producto en el inventario</p>
+                    <p class="form-subtitle">Complete la información del nuevo producto</p>
 
                     <h:form id="formProducto">
                         <div class="form-grid">
@@ -292,7 +291,7 @@
                             <div class="form-group full-width">
                                 <h:outputLabel for="nombre" value="Nombre del Producto *" styleClass="form-label"/>
                                 <p:inputText id="nombre" value="#{productoBean.producto.nombre}"
-                                             required="true" maxlength="100"
+                                             required="true" maxlength="50"
                                              placeholder="Ingrese el nombre del producto"/>
                                 <p:message for="nombre" style="color:red;font-size:12px"/>
                             </div>
@@ -301,37 +300,39 @@
                             <div class="form-group full-width">
                                 <h:outputLabel for="descripcion" value="Descripción" styleClass="form-label"/>
                                 <p:inputTextarea id="descripcion" value="#{productoBean.producto.descripcion}"
-                                                 maxlength="150" rows="3"
+                                                 maxlength="100" rows="3"
                                                  placeholder="Descripción del producto (opcional)"/>
                             </div>
 
-                            <!-- Precio -->
+                            <!-- Precio Final -->
                             <div class="form-group">
-                                <h:outputLabel for="precio" value="Precio *" styleClass="form-label"/>
-                                <p:inputNumber id="precio" value="#{productoBean.producto.precio}"
+                                <h:outputLabel for="precioFinal" value="Precio Final *" styleClass="form-label"/>
+                                <p:inputNumber id="precioFinal" value="#{productoBean.producto.precioFinal}"
                                                required="true" symbol="$" decimalPlaces="2"
                                                placeholder="0.00"/>
-                                <p:message for="precio" style="color:red;font-size:12px"/>
+                                <p:message for="precioFinal" style="color:red;font-size:12px"/>
                             </div>
 
                             <!-- Categoría -->
                             <div class="form-group">
-                                <h:outputLabel for="categoria" value="Categoría" styleClass="form-label"/>
-                                <p:selectOneMenu id="categoria" value="#{productoBean.producto.idCategoria}">
+                                <h:outputLabel for="categoria" value="Categoría *" styleClass="form-label"/>
+                                <p:selectOneMenu id="categoria" value="#{productoBean.producto.idCategoria}" required="true">
                                     <f:selectItem itemLabel="Seleccione categoría..." itemValue="#{null}" noSelectionOption="true"/>
                                     <f:selectItems value="#{productoBean.listaCategorias}" var="cat"
                                                    itemLabel="#{cat.nombre}" itemValue="#{cat.id}"/>
                                 </p:selectOneMenu>
+                                <p:message for="categoria" style="color:red;font-size:12px"/>
                             </div>
 
-                            <!-- Proveedor -->
+                            <!-- Stock -->
                             <div class="form-group">
-                                <h:outputLabel for="proveedor" value="Proveedor" styleClass="form-label"/>
-                                <p:selectOneMenu id="proveedor" value="#{productoBean.producto.idProveedor}">
-                                    <f:selectItem itemLabel="Seleccione proveedor..." itemValue="#{null}" noSelectionOption="true"/>
-                                    <f:selectItems value="#{productoBean.listaProveedores}" var="prov"
-                                                   itemLabel="#{prov.nombre}" itemValue="#{prov.id}"/>
-                                </p:selectOneMenu>
+                                <h:outputLabel for="stock" value="Stock *" styleClass="form-label"/>
+                                <p:inputNumber id="stock"
+                                               value="#{productoBean.producto.stock}"
+                                               required="true"
+                                               minValue="0"
+                                               placeholder="Cantidad disponible"/>
+                                <p:message for="stock" style="color:red;font-size:12px"/>
                             </div>
 
                             <!-- Fecha de Caducidad -->
@@ -343,32 +344,23 @@
 
                             <!-- Estado -->
                             <div class="form-group">
-                                <h:outputLabel for="estado" value="Estado" styleClass="form-label"/>
-                                <p:selectOneMenu id="estado" value="#{productoBean.producto.estado}">
+                                <h:outputLabel for="estado" value="Estado *" styleClass="form-label"/>
+                                <p:selectOneMenu id="estado" value="#{productoBean.producto.estado}" required="true">
                                     <f:selectItem itemLabel="Seleccione estado..." itemValue="" noSelectionOption="true"/>
-                                    <f:selectItem itemLabel="ACTIVO" itemValue="ACTIVO"/>
-                                    <f:selectItem itemLabel="PRIVADO" itemValue="PRIVADO"/>
-                                    <f:selectItem itemLabel="AGOTADO" itemValue="AGOTADO"/>
+                                    <f:selectItem itemLabel="Activo" itemValue="Activo"/>
+                                    <f:selectItem itemLabel="Privado" itemValue="Privado"/>
+                                    <f:selectItem itemLabel="Agotado" itemValue="Agotado"/>
                                 </p:selectOneMenu>
+                                <p:message for="estado" style="color:red;font-size:12px"/>
                             </div>
 
-                            <div class="form-group">
-                                <h:outputLabel for="stockInicial" value="Stock inicial" styleClass="form-label"/>
-                                <p:inputNumber id="stockInicial"
-                                               value="#{productoBean.producto.stockInicial}"
-                                               required="true"
-                                               minValue="0"
-                                               placeholder="Cantidad inicial en inventario"/>
-                                <p:message for="stockInicial" style="color:red;font-size:12px"/>
-                            </div>
-
-
-                            <!-- Foto -->
+                            <!-- Imagen -->
                             <div class="form-group full-width">
-                                <h:outputLabel for="foto" value="Imagen (opcional)" styleClass="form-label"/>
-                                <p:inputText id="foto" value="#{productoBean.producto.foto}"
-                                             maxlength="100" placeholder="ejemplo.jpg"/>
+                                <h:outputLabel for="imagen" value="Imagen (opcional)" styleClass="form-label"/>
+                                <p:inputText id="imagen" value="#{productoBean.producto.imagen}"
+                                             maxlength="100" placeholder="nombre_imagen.jpg"/>
                             </div>
+
                         </div>
 
                         <div class="button-group">
