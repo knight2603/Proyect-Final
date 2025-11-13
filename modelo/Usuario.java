@@ -2,9 +2,11 @@
 package modelo;
 
 public class Usuario {
-    
+   
     private int cc;
-    private String nombre, lastname, correo, pswd, tipo, foto;
+    private String nombre, lastname, correo, pswd, tipo, foto, estado;
+
+
 
     public int getCc() {
         return cc;
@@ -61,5 +63,13 @@ public class Usuario {
     public void setFoto(String foto) {
         this.foto = foto;
     }
-    
+        public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+   
 }
+
