@@ -288,7 +288,7 @@ public class UsuarioBean {
 
     public int getTotalUsuarios() {
         int total = 0;
-        try (Connection con = ConnBD.conectar(); // ✅ corregido: igual que en los demás métodos
+        try (Connection con = ConnBD.conectar(); 
                  PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) FROM usuarios")) {
 
             ResultSet rs = ps.executeQuery();

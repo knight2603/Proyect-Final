@@ -4,15 +4,11 @@ import java.io.Serializable;
 import modelo.Producto;
 import dao.ProductoDAO;
 import dao.CategoriasDAO;
-import dao.ProveedoresDAO;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import modelo.Categorias;
-import modelo.Proveedores;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -23,11 +19,9 @@ public class ProductoBean implements Serializable {
 
     private Producto producto = new Producto();
     private List<Categorias> listaCategorias;
-    private List<Proveedores> listaProveedores;
 
     private ProductoDAO productoDAO = new ProductoDAO();
     private CategoriasDAO categoriasDAO = new CategoriasDAO();
-    private ProveedoresDAO proveedoresDAO = new ProveedoresDAO();
     private List<Object[]> listaVistaProductos;
 
     // ✅ Método para cargar la lista de productos con inventario y categoría
@@ -51,7 +45,6 @@ public class ProductoBean implements Serializable {
     public void init() {
         // Cargar listas de categorías y proveedores al iniciar el bean
         listaCategorias = categoriasDAO.listar();
-        listaProveedores = proveedoresDAO.listar();
         listaVistaProductos = productoDAO.obtenerVistaProductos();
     }
 
@@ -184,14 +177,6 @@ public class ProductoBean implements Serializable {
 
     public void setListaCategorias(List<Categorias> listaCategorias) {
         this.listaCategorias = listaCategorias;
-    }
-
-    public List<Proveedores> getListaProveedores() {
-        return listaProveedores;
-    }
-
-    public void setListaProveedores(List<Proveedores> listaProveedores) {
-        this.listaProveedores = listaProveedores;
     }
 
     public void setListaVistaProductos(List<Object[]> listaVistaProductos) {
