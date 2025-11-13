@@ -21,9 +21,10 @@ public class UsuarioDAO {
     private PreparedStatement ps;
     private ResultSet rs;
     
+
 public void agregar(Usuario usu) {
     try {
-        String sql = "INSERT INTO usuarios(cc, nombre, lastname, correo, pswd, tipo) VALUES(?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO usuarios(cc, nombre, lastname, correo, pswd, tipo, estado) VALUES(?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = ConnBD.conectar().prepareStatement(sql);
 
         ps.setInt(1, usu.getCc());
@@ -37,6 +38,8 @@ public void agregar(Usuario usu) {
 
         // Siempre será "C"
         ps.setString(6, "C");
+        
+        ps.setString(7, "Activo");
 
         ps.executeUpdate();
 
@@ -136,3 +139,4 @@ public Usuario buscar(int cc) {
 
 
 }
+
