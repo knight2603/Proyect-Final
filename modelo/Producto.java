@@ -4,10 +4,10 @@ import java.util.Date;
 
 public class Producto {
 
-    private int id, stock, id_categoria;
-    private String nombre, descrcipcion, estado, imagen;
-    private double  precio_final;
-    private Date fecha_caducidad;
+    private int id, stock, idCategoria;
+    private String nombre, descripcion, estado, imagen;
+    private double  precioFinal;
+    private Date fechaCaducidad;
 
     public int getId() {
         return id;
@@ -25,13 +25,14 @@ public class Producto {
         this.stock = stock;
     }
 
-    public int getId_categoria() {
-        return id_categoria;
+    public int getIdCategoria() {
+        return idCategoria;
     }
 
-    public void setId_categoria(int id_categoria) {
-        this.id_categoria = id_categoria;
+    public void setIdCategoria(int idCategoria) {
+        this.idCategoria = idCategoria;
     }
+
 
     public String getNombre() {
         return nombre;
@@ -42,11 +43,11 @@ public class Producto {
     }
 
     public String getDescrcipcion() {
-        return descrcipcion;
+        return descripcion;
     }
 
     public void setDescrcipcion(String descrcipcion) {
-        this.descrcipcion = descrcipcion;
+        this.descripcion = descrcipcion;
     }
 
     public String getEstado() {
@@ -65,20 +66,30 @@ public class Producto {
         this.imagen = imagen;
     }
 
-    public double getPrecio_final() {
-        return precio_final;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setPrecio_final(double precio_final) {
-        this.precio_final = precio_final;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
-    public Date getFecha_caducidad() {
-        return fecha_caducidad;
+    public double getPrecioFinal() {
+        return precioFinal;
     }
 
-    public void setFecha_caducidad(Date fecha_caducidad) {
-        this.fecha_caducidad = fecha_caducidad;
+    public void setPrecioFinal(double precioFinal) {
+        this.precioFinal = precioFinal;
     }
+
+    public Date getFechaCaducidad() {
+        return fechaCaducidad;
+    }
+
+    public void setFechaCaducidad(Date fechaCaducidad) {
+        this.fechaCaducidad = fechaCaducidad;
+    }
+
+
     
 }
