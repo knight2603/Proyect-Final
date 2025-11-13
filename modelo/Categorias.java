@@ -5,15 +5,22 @@ public class Categorias {
    
    
     private int id;
-    private String nombre, descripcion;
+    private String nombre, subcategorias;
 
     public Categorias() {
     }
 
-    public Categorias(int id, String nombre, String descripcion) {
+    public Categorias(int id, String nombre) {
         this.id = id;
         this.nombre = nombre;
-        this.descripcion = descripcion;
+    }
+
+    public String getSubcategorias() {
+        return subcategorias;
+    }
+
+    public void setSubcategorias(String subcategorias) {
+        this.subcategorias = subcategorias;
     }
 
     public int getId() {
@@ -32,13 +39,7 @@ public class Categorias {
         this.nombre = nombre;
     }
 
-    public String getDescripcion() {
-        return descripcion;
-    }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
    
    
 }
