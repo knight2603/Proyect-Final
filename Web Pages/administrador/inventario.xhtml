@@ -252,7 +252,6 @@
                 <div class="sidebar-menu">
                     <h:link outcome="/admin.xhtml"><i class="fas fa-home"></i><span>Dashboard</span></h:link>
                     <h:link outcome="/administrador/inventario.xhtml" styleClass="active"><i class="fas fa-box"></i><span>Inventario</span></h:link>
-                    <h:link outcome="/administrador/proveedores.xhtml"><i class="fas fa-truck"></i><span>Proveedores</span></h:link>
                     <h:link outcome="/administrador/categorias.xhtml"><i class="fas fa-tags"></i><span>Categorías</span></h:link>
                     <h:link outcome="/administrador/usuarios.xhtml"><i class="fas fa-users"></i><span>Usuarios</span></h:link>
                 </div>
@@ -279,7 +278,7 @@
                     <div class="header-section">
                         <div class="header-text">
                             <h1>Gestión de Inventario</h1>
-                            <p>Administra tus productos, categorías y proveedores</p>
+                            <p>Administra tus productos  categorías </p>
                         </div>
                     </div>
 
@@ -289,7 +288,6 @@
                             <div class="buttons-group">
                                 <p:button value="Nuevo Producto" outcome="/administrador/nuevoproducto.xhtml" icon="pi pi-plus" styleClass="action-button"/>
                                 <p:button value="Salida de Inventario" outcome="/administrador/nuevaSalida.xhtml" icon="pi pi-arrow-up" styleClass="action-button"/>
-                                <p:button value="Nuevo Proveedor" outcome="/administrador/nuevoprov.xhtml" icon="pi pi-truck" styleClass="action-button"/>
                                 <p:button value="Nueva Categoría" outcome="/administrador/nuevacat.xhtml" icon="pi pi-tags" styleClass="action-button"/>
                                 <p:commandButton value="Reporte PDF" icon="pi pi-file-pdf" styleClass="action-button btn-pdf" />
                             </div>
@@ -368,7 +366,7 @@
                                     <p:inputTextarea id="descripcion" value="#{productoBean.producto.descripcion}" />
 
                                     <h:outputLabel for="precio" value="Precio:"/>
-                                    <p:inputNumber id="precio" value="#{productoBean.producto.precio}" required="true" symbol="$" decimalPlaces="2"/>
+                                    <p:inputNumber id="precio" value="#{productoBean.producto.precioFinal}" required="true" symbol="$" decimalPlaces="2"/>
 
                                     <h:outputLabel for="categoria" value="Categoría:"/>
                                     <p:selectOneMenu id="categoria" value="#{productoBean.producto.idCategoria}">
@@ -401,7 +399,6 @@
                                                  styleClass="btn-secondary"/>
                             </p:dialog>
                         </h:form>
-
                     </div> <!-- 🔹 Cierre de .action-bar -->
                 </div> <!-- 🔹 Cierre de .card -->
             </div> <!-- 🔹 Cierre de .main-content -->

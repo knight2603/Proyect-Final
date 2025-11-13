@@ -173,52 +173,35 @@
 </h:head>
 
 <h:body>
+            <!-- SIDEBAR -->
+            <div class="sidebar">
+                <div class="sidebar-header" style="text-align:center;">
+                    <h:graphicImage library="img" name="download.png" alt="Logo"/>
+                    <h3 style="margin-top:10px;">HOMECOPY<br/>J&amp;D</h3>
+                </div>
 
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <div class="sidebar-header">
-            <h:graphicImage library="img" name="download.png" alt="Logo"/>
-            <span>HOMECOPY PAPELERIA J&amp;D</span>
-        </div>
+                <div class="sidebar-menu">
+                    <h:link outcome="/admin.xhtml"><i class="fas fa-home"></i><span>Dashboard</span></h:link>
+                    <h:link outcome="/administrador/inventario.xhtml"><i class="fas fa-box"></i><span>Inventario</span></h:link>
+                    <h:link outcome="/administrador/categorias.xhtml" styleClass="active"><i class="fas fa-tags"></i><span>Categorías</span></h:link>
+                    <h:link outcome="/administrador/usuarios.xhtml"><i class="fas fa-users"></i><span>Usuarios</span></h:link>
+                </div>
 
-        <div class="sidebar-menu">
-            <h:link outcome="/admin.xhtml">
-                <i class="fas fa-home"></i><span>Dashboard</span>
-            </h:link>
-            <h:link outcome="/administrador/inventario.xhtml">
-                <i class="fas fa-box"></i><span>Inventario</span>
-            </h:link>
-            <h:link outcome="/administrador/proveedores.xhtml">
-                <i class="fas fa-truck"></i><span>Proveedores</span>
-            </h:link>
-            <h:link outcome="/administrador/categorias.xhtml" styleClass="active">
-                <i class="fas fa-tags"></i><span>Categorías</span>
-            </h:link>
-            <h:link outcome="/administrador/usuarios.xhtml">
-                <i class="fas fa-users"></i><span>Usuarios</span>
-            </h:link>
-            <h:link outcome="/administrador/correos.xhtml">
-                <i class="fas fa-envelope"></i><span>Correos</span>
-            </h:link>
-        </div>
+                <div class="sidebar-footer">
+                    <div class="user-info" style="margin-bottom:1rem;">
+                        <h4>Bienvenido</h4>
+                        <strong>#{sessionScope.user}</strong>
+                    </div>
 
-        <div class="sidebar-footer">
-            <div class="user-info">
-                <h4>Administrador #{sessionScope.user}</h4>
+                    <h:form>
+                        <h:commandLink action="#{usuarioBean.cerrarSesion}" 
+                                       style="display:block;text-align:center;background:linear-gradient(135deg,#dc3545,#c82333);
+                                       color:white;padding:10px;border-radius:8px;text-decoration:none;font-weight:500;">
+                            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                        </h:commandLink>
+                    </h:form>
+                </div>
             </div>
-
-            <h:form>
-                <h:commandLink action="#{usuarioBean.cerrarSesion}" 
-                               style="display:inline-block;background:linear-gradient(135deg, #dc3545, #c82333);color:white;
-                               padding:8px 16px;border-radius:6px;text-decoration:none;font-weight:500;"
-                               onmouseover="this.style.background = 'linear-gradient(135deg, #c82333, #a71e2a)'"
-                               onmouseout="this.style.background = 'linear-gradient(135deg, #dc3545, #c82333)'">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span style="margin-left:6px;">Cerrar Sesión</span>
-                </h:commandLink>
-            </h:form>
-        </div>
-    </div>
 
     <!-- Contenido principal -->
     <div class="main-content">
@@ -259,7 +242,7 @@
                     </p:column>
 
                     <p:column headerText="Descripción">
-                        <h:outputText value="#{cat.descripcion}" />
+                        <h:outputText value="#{cat.subCategorias}" />
                     </p:column>
 
                     <p:column headerText="Acciones" style="width:150px; text-align:center;">
