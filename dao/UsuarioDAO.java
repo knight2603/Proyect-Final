@@ -1,4 +1,3 @@
-
 package dao;
 
 //Importanciones
@@ -145,6 +144,3 @@ public class UsuarioDAO {
     }
 
 }
-
-
-

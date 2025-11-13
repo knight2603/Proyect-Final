@@ -1,5 +1,6 @@
 package dao;
 
+//Importaciones
 import modelo.Categorias;
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,45 +13,45 @@ public class CategoriasDAO {
         // Constructor vacío
     }
 
+    //El metodo a la conexion a la base de datos 
     private Connection getConnection() {
         return ConnBD.conectar();
     }
 
+    //Creamos el metodo y listamos las categorias
     public List<Categorias> listar() {
         List<Categorias> lista = new ArrayList<>();
-        String sql = "SELECT id, nombre, descripcion FROM categorias ORDER BY nombre";
+        String sql = "SELECT id, nombre, subcategoria FROM categorias ORDER BY nombre";
 
-        try (Connection con = getConnection();
-             PreparedStatement ps = con.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+        try (Connection con = getConnection(); PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 Categorias cat = new Categorias();
                 cat.setId(rs.getInt("id"));
                 cat.setNombre(rs.getString("nombre"));
-                cat.setDescripcion(rs.getString("descripcion"));
+                cat.setSubCategorias(rs.getString("subcategoria"));
                 lista.add(cat);
             }
 
         } catch (SQLException e) {
-            System.out.println("❌ Error al listar categorías: " + e.getMessage());
+            System.err.println("❌ Error al listar categorías: " + e.getMessage());
             e.printStackTrace();
         }
 
         return lista;
     }
 
+    //Agregamos el metodo agregar para nuevas categorias
     public boolean agregar(Categorias categoria) {
-        String sql = "INSERT INTO categorias (nombre, descripcion) VALUES (?, ?)";
+        String sql = "INSERT INTO categorias (nombre, subcategoria) VALUES (?, ?)";
 
-        try (Connection con = getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, categoria.getNombre());
-            
+
             // Manejar descripción nula
-            if (categoria.getDescripcion() != null) {
-                ps.setString(2, categoria.getDescripcion());
+            if (categoria.getSubCategorias() != null) {
+                ps.setString(2, categoria.getSubCategorias());
             } else {
                 ps.setString(2, "");
             }
@@ -66,10 +67,10 @@ public class CategoriasDAO {
         }
     }
 
+    //Agregamos el metodo eliminar para eliminar las categorias
     public boolean eliminar(int id) {
         String sql = "DELETE FROM categorias WHERE id = ?";
-        try (Connection con = getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, id);
             int filasAfectadas = ps.executeUpdate();
             return filasAfectadas > 0;
@@ -80,27 +81,27 @@ public class CategoriasDAO {
         }
     }
 
+    //Agregamos el metodo buscar por ID las categorias
     public Categorias buscarPorId(int id) {
-        String sql = "SELECT id, nombre, descripcion FROM categorias WHERE id = ?";
+        String sql = "SELECT id, nombre, subcategorias FROM categorias WHERE id = ?";
         Categorias cat = null;
-        
-        try (Connection con = getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+
+        try (Connection con = getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            
+
             if (rs.next()) {
                 cat = new Categorias();
                 cat.setId(rs.getInt("id"));
                 cat.setNombre(rs.getString("nombre"));
-                cat.setDescripcion(rs.getString("descripcion"));
+                cat.setSubCategorias(rs.getString("Subcategorias"));
             }
-            
+
         } catch (SQLException e) {
             System.out.println("❌ Error al buscar categoría: " + e.getMessage());
             e.printStackTrace();
         }
-        
+
         return cat;
     }
 }

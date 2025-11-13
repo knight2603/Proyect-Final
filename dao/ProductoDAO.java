@@ -203,4 +203,3 @@ public List<Object[]> obtenerVistaProductos() {
     return lista;
 }
 }
-
