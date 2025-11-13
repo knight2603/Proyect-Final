@@ -1,27 +1,10 @@
-
 package modelo;
-
-import java.util.Date;
-
 
 
 public class inventario {
     
-    private int id, id_producto, stock;
-    private String ubicacion; 
-    private Date ultima_actualizacion;
-
-    public inventario() {
-    }
-
-    public inventario(int id, int id_producto, int stock, String ubicacion, Date ultima_actualizacion) {
-        this.id = id;
-        this.id_producto = id_producto;
-        this.stock = stock;
-        this.ubicacion = ubicacion;
-        this.ultima_actualizacion = ultima_actualizacion;
-    }
-
+    
+    private int id, id_producto, id_entrada_inventario, id_salida_inventario;
 
     public int getId() {
         return id;
@@ -39,31 +22,23 @@ public class inventario {
         this.id_producto = id_producto;
     }
 
-    public int getStock() {
-        return stock;
+    public int getId_entrada_inventario() {
+        return id_entrada_inventario;
     }
 
-    public void setStock(int stock) {
-        this.stock = stock;
+    public void setId_entrada_inventario(int id_entrada_inventario) {
+        this.id_entrada_inventario = id_entrada_inventario;
     }
 
-    public String getUbicacion() {
-        return ubicacion;
+    public int getId_salida_inventario() {
+        return id_salida_inventario;
     }
 
-    public void setUbicacion(String ubicacion) {
-        this.ubicacion = ubicacion;
-    }
-
-    public Date getUltima_actualizacion() {
-        return ultima_actualizacion;
-    }
-
-    public void setUltima_actualizacion(Date ultima_actualizacion) {
-        this.ultima_actualizacion = ultima_actualizacion;
+    public void setId_salida_inventario(int id_salida_inventario) {
+        this.id_salida_inventario = id_salida_inventario;
     }
     
     
-    
+   
 
 }
