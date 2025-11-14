@@ -19,6 +19,9 @@ public class CarritoBean implements Serializable {
     private String direccion;
     private String metodoPago;
 
+    // Total guardado para mostrar en confirmación
+    private double totalPagado;
+
     // ------------------------------
     // GETTERS Y SETTERS
     // ------------------------------
@@ -63,6 +66,10 @@ public class CarritoBean implements Serializable {
         this.metodoPago = metodoPago;
     }
 
+    public double getTotalPagado() {
+        return totalPagado;
+    }
+
     // ------------------------------
     // FUNCIONES DEL CARRITO
     // ------------------------------
@@ -79,7 +86,7 @@ public class CarritoBean implements Serializable {
         return carrito.stream().mapToDouble(Productos::getPrecio).sum();
     }
 
-    // NUEVO: cantidad total para mostrar en el header
+    // Cantidad total (badge del header)
     public int getCantidadCarrito() {
         return carrito.size();
     }
@@ -89,13 +96,17 @@ public class CarritoBean implements Serializable {
     // ------------------------------
     public String procesarPago() {
 
+        // Guardamos el total antes de limpiar el carrito
+        totalPagado = getTotal();
+
         System.out.println("----- PAGO PROCESADO -----");
         System.out.println("Cliente: " + nombre);
         System.out.println("Correo: " + correo);
         System.out.println("Dirección: " + direccion);
         System.out.println("Método Pago: " + metodoPago);
-        System.out.println("Total: " + getTotal());
+        System.out.println("Total Pagado: " + totalPagado);
 
+        // Limpiar carrito después
         carrito.clear();
 
         return "confirmacion?faces-redirect=true";
