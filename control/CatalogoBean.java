@@ -2,6 +2,7 @@ package control;
 
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,12 +13,14 @@ import modelo.Productos;
 public class CatalogoBean implements Serializable {
 
     private List<Productos> productos;     // Todos los productos
-    private List<Productos> carrito;       // Carrito
     private String filtro = "todos";       // Categoría actual
+
+    // INYECTAR EL CARRITOBEAN REAL
+    @ManagedProperty(value = "#{carritoBean}")
+    private CarritoBean carritoBean;
 
     public CatalogoBean() {
         productos = new ArrayList<>();
-        carrito = new ArrayList<>();
 
         // Útiles
         productos.add(new Productos("Cuaderno Argollado", "utiles", 8000, "resources/img/cuaderno.jpg", "Cuaderno con argollas y hojas rayadas."));
@@ -38,6 +41,11 @@ public class CatalogoBean implements Serializable {
         productos.add(new Productos("Planta Artificial", "deco", 18000, "resources/img/planta.jpg", "Planta artificial decorativa."));
     }
 
+    // Setter necesario para @ManagedProperty
+    public void setCarritoBean(CarritoBean carritoBean) {
+        this.carritoBean = carritoBean;
+    }
+
     // --- FILTRO ---
     public List<Productos> getProductosFiltrados() {
         if (filtro.equals("todos")) return productos;
@@ -55,25 +63,21 @@ public class CatalogoBean implements Serializable {
         this.filtro = cat;
     }
 
-    // --- CARRITO ---
+    // --- CARRITO (USANDO EL CARRITOBEAN REAL) ---
     public void agregarCarrito(Productos p) {
-        carrito.add(p);
-    }
-
-    public void eliminarCarrito(Productos p) {
-        carrito.remove(p);
+        carritoBean.agregarProducto(p);
     }
 
     public List<Productos> getCarrito() {
-        return carrito;
+        return carritoBean.getCarrito();
     }
 
     public int getTotal() {
-        return carrito.stream().mapToInt(Productos::getPrecio).sum();
+        return (int) carritoBean.getTotal();
     }
 
     public int getCantidadCarrito() {
-        return carrito.size();
+        return carritoBean.getCantidadCarrito();
     }
 
     // --- NAVEGAR AL FORMULARIO DE PAGO ---
