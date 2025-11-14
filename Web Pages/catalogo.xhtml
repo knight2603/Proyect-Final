@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+    <title>Catálogo Papelería HomeCopy J$D</title>
+
+    <style>
+        body { font-family: Arial; background: #f3f3f3; margin: 0; padding: 20px; }
+        h1 { text-align: center; }
+
+        .categorias {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .categorias .btn-filtro {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            cursor: pointer;
+            background: #007bff;
+            color: white;
+            border-radius: 6px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            width: 90%;
+            margin: auto;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #ccc;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .card img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .card .descripcion {
+            font-size: 14px;
+            color: #555;
+            margin: 5px 0;
+        }
+
+        .btn {
+            padding: 8px 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+            background: #28a745;
+            color: white;
+        }
+    </style>
+</h:head>
+
+<h:body>
+
+    <ui:include src="header.xhtml" />
+
+    <h1>Catálogo de Productos</h1>
+
+    <!-- Filtros de Categoría -->
+    <div class="categorias">
+        <h:form>
+            <h:commandButton value="Todos" action="#{catalogoBean.aplicarFiltro('todos')}" styleClass="btn-filtro" />
+            <h:commandButton value="Útiles Escolares" action="#{catalogoBean.aplicarFiltro('utiles')}" styleClass="btn-filtro" />
+            <h:commandButton value="Medicamentos" action="#{catalogoBean.aplicarFiltro('med')}" styleClass="btn-filtro" />
+            <h:commandButton value="Decoración" action="#{catalogoBean.aplicarFiltro('deco')}" styleClass="btn-filtro" />
+        </h:form>
+    </div>
+
+    <!-- Productos dinámicos -->
+    <h:form>
+        <div class="grid">
+            <ui:repeat value="#{catalogoBean.productosFiltrados}" var="p">
+                <div class="card">
+                    <h:graphicImage value="#{p.imagen}" />
+                    <h3>#{p.nombre}</h3>
+                    <p class="descripcion">#{p.descripcion}</p> <!-- AQUI SE MUESTRA LA DESCRIPCIÓN -->
+                    <p>$#{p.precio}</p>
+                    <h:commandButton value="Agregar al carrito"
+                                     action="#{catalogoBean.agregarCarrito(p)}"
+                                     styleClass="btn" />
+                </div>
+            </ui:repeat>
+        </div>
+    </h:form>
+
+</h:body>
+</html>

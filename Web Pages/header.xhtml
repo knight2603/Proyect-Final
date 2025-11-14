@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+<h:body>
+    <div style="width:100%; background:#007bff; color:white; padding:12px;
+         display:flex; justify-content:space-between; align-items:center; font-family:Arial;">
+
+        <span style="font-size:20px; font-weight:bold;">HOME COPY J$D</span>
+
+        <h:form>
+            <h:commandLink action="carrito.xhtml" style="color:white; text-decoration:none; font-size:18px; position:relative;">
+                🛒
+                <span style="
+                    position:absolute;
+                    top:-8px;
+                    right:-12px;
+                    background:red;
+                    color:white;
+                    border-radius:50%;
+                    padding:2px 6px;
+                    font-size:12px;
+                ">
+                    #{catalogoBean.cantidadCarrito}
+                </span>
+            </h:commandLink>
+        </h:form>
+
+    </div>
+</h:body>
+</html>
