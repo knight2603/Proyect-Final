@@ -85,7 +85,7 @@ public class UsuarioBean {
         listar();
     }
 
-    public void auth() {
+    public String authLogin() {
         try {
             Connection con = ConnBD.conectar();
 
@@ -99,24 +99,56 @@ public class UsuarioBean {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+
+                // guardar usuario en sesión
+                FacesContext.getCurrentInstance().getExternalContext()
+                        .getSessionMap()
                         .put("user", rs.getString("nombre"));
 
-                if (rs.getString("tipo").equals("C")) {
-                    FacesContext.getCurrentInstance().getExternalContext().redirect("cliente.xhtml");
+                String tipo = rs.getString("tipo");
+
+// SI VIENE DEL CARRITO
+                String redirect = (String) FacesContext.getCurrentInstance()
+                        .getExternalContext()
+                        .getSessionMap()
+                        .get("redireccionDespuesLogin");
+
+                if (redirect != null) {
+                    FacesContext.getCurrentInstance().getExternalContext()
+                            .getSessionMap().remove("redireccionDespuesLogin"); // limpiar
+                    return redirect + "?faces-redirect=true";
+                }
+
+// LOGIN NORMAL
+                if (tipo.equals("C")) {
+                    return "cliente.xhtml?faces-redirect=true";
                 } else {
-                    FacesContext.getCurrentInstance().getExternalContext().redirect("admin.xhtml");
+                    return "admin.xhtml?faces-redirect=true";
                 }
 
             } else {
-                FacesContext.getCurrentInstance().
-                        addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
-                                "Aviso", "Correo y/o Contraseña no válidos"));
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_WARN,
+                                "Aviso", "Correo y/o contraseña no válidos"));
+                return null;
             }
-        } catch (SQLException | IOException e) {
-            FacesContext.getCurrentInstance().
-                    addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL,
-                            "Error", "Error en Conexión a Base de Datos"));
+
+        } catch (SQLException e) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_FATAL,
+                            "Error", "Error en conexión a base de datos"));
+            return null;
+        }
+    }
+
+    public void auth() {
+        String res = authLogin();
+        if (res != null) {
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect(res);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -288,8 +320,7 @@ public class UsuarioBean {
 
     public int getTotalUsuarios() {
         int total = 0;
-        try (Connection con = ConnBD.conectar(); 
-                 PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) FROM usuarios")) {
+        try (Connection con = ConnBD.conectar(); PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) FROM usuarios")) {
 
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {

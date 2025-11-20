@@ -4,6 +4,10 @@ import java.io.Serializable;
 import modelo.Producto;
 import dao.ProductoDAO;
 import dao.CategoriasDAO;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -23,6 +27,7 @@ public class ProductoBean implements Serializable {
     private ProductoDAO productoDAO = new ProductoDAO();
     private CategoriasDAO categoriasDAO = new CategoriasDAO();
     private List<Object[]> listaVistaProductos;
+    private List<Producto> listaProductosImagen;
 
     // ✅ Método para cargar la lista de productos con inventario y categoría
     public void cargarVistaProductos() {
@@ -36,9 +41,8 @@ public class ProductoBean implements Serializable {
         return listaVistaProductos;
     }
 
-    // Método para preparar la edición de un producto
-    public void prepararEdicion(int idProducto) {
-        producto = productoDAO.obtenerPorId(idProducto);
+    public ProductoBean() {
+        cargarProductosConImagen();
     }
 
     @PostConstruct
@@ -119,28 +123,40 @@ public class ProductoBean implements Serializable {
         try {
             ProductoDAO dao = new ProductoDAO();
 
-            if (producto != null && producto.getId() > 0) {
-                boolean actualizado = dao.actualizarProducto(producto);
-
-                if (actualizado) {
-                    FacesContext.getCurrentInstance().addMessage(null,
-                            new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Producto actualizado correctamente."));
-
-                    // Refresca la lista después de guardar los cambios
-                    listaVistaProductos = dao.obtenerVistaProductos();
-
-                } else {
-                    FacesContext.getCurrentInstance().addMessage(null,
-                            new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo actualizar el producto."));
-                }
-            } else {
+            if (producto == null || producto.getId() <= 0) {
                 FacesContext.getCurrentInstance().addMessage(null,
                         new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Producto inválido o sin ID."));
+                return;
+            }
+
+            System.out.println("=== DEBUG GUARDAR EDICION ===");
+            System.out.println("ID: " + producto.getId());
+            System.out.println("Nombre: " + producto.getNombre());
+            System.out.println("Descripcion: " + producto.getDescripcion());
+            System.out.println("Precio: " + producto.getPrecioFinal());
+            System.out.println("Stock: " + producto.getStock());
+            System.out.println("Categoria: " + producto.getIdCategoria());
+            System.out.println("Estado: " + producto.getEstado());
+            System.out.println("Imagen: " + producto.getImagen());
+            System.out.println("Fecha Caducidad: " + producto.getFechaCaducidad());
+
+            boolean actualizado = dao.actualizarProducto(producto);
+
+            if (actualizado) {
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Producto actualizado correctamente."));
+
+                // Refrescar lista
+                listaVistaProductos = dao.obtenerVistaProductos();
+
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo actualizar el producto."));
             }
 
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Ocurrió un error al actualizar el producto."));
             e.printStackTrace();
         }
     }
@@ -154,6 +170,26 @@ public class ProductoBean implements Serializable {
         }
     }
 
+    public void cargarProductosConImagen() {
+        ProductoDAO dao = new ProductoDAO();
+        listaProductosImagen = dao.listarProductosConImagen();
+    }
+
+    public int getTotalProductos() {
+        int total = 0;
+        try (Connection con = ConnBD.conectar(); PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) FROM producto")) {
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                total = rs.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return total;
+    }
+
     // Getters y Setters
     public Producto getProducto() {
         return producto;
@@ -165,6 +201,10 @@ public class ProductoBean implements Serializable {
 
     public String getMensaje() {
         return mensaje;
+    }
+
+    public List<Producto> getListaProductosImagen() {
+        return listaProductosImagen;
     }
 
     public void setMensaje(String mensaje) {

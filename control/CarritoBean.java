@@ -1,114 +1,115 @@
 package control;
 
-import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ManagedBean;
+import dao.ProductoDAO;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import modelo.Productos;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
+import modelo.ItemCarrito;
+import modelo.Producto;
+import javax.inject.Named;
 
-@ManagedBean(name = "carritoBean")
+@Named("carritoBean")
 @SessionScoped
 public class CarritoBean implements Serializable {
 
-    private List<Productos> carrito = new ArrayList<>();
+    private List<ItemCarrito> carrito = new ArrayList<>();
+    private double total;
 
-    // Datos del cliente
-    private String nombre;
-    private String correo;
-    private String direccion;
-    private String metodoPago;
-
-    // Total guardado para mostrar en confirmación
-    private double totalPagado;
-
-    // ------------------------------
-    // GETTERS Y SETTERS
-    // ------------------------------
-
-    public List<Productos> getCarrito() {
+    public List<ItemCarrito> getCarrito() {
         return carrito;
     }
 
-    public void setCarrito(List<Productos> carrito) {
-        this.carrito = carrito;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getCorreo() {
-        return correo;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
-    public String getMetodoPago() {
-        return metodoPago;
-    }
-
-    public void setMetodoPago(String metodoPago) {
-        this.metodoPago = metodoPago;
-    }
-
-    public double getTotalPagado() {
-        return totalPagado;
-    }
-
-    // ------------------------------
-    // FUNCIONES DEL CARRITO
-    // ------------------------------
-
-    public void agregarProducto(Productos p) {
-        carrito.add(p);
-    }
-
-    public void eliminarProducto(Productos p) {
-        carrito.remove(p);
-    }
-
     public double getTotal() {
-        return carrito.stream().mapToDouble(Productos::getPrecio).sum();
+        return total;
     }
 
-    // Cantidad total (badge del header)
-    public int getCantidadCarrito() {
-        return carrito.size();
+    // AGREGAR DIRECTO
+    public void agregar(Producto p) {
+        for (ItemCarrito item : carrito) {
+            if (item.getProducto().getId() == p.getId()) {
+                item.setCantidad(item.getCantidad() + 1);
+                calcularTotal();
+                return;
+            }
+        }
+        carrito.add(new ItemCarrito(p, 1));
+        calcularTotal();
     }
 
-    // ------------------------------
-    // PROCESAR PAGO
-    // ------------------------------
-    public String procesarPago() {
+    // AGREGAR POR ID
+    public void agregarPorId(Object idProducto) {
+        try {
+            if (idProducto == null) {
+                System.out.println("ID nulo");
+                return;
+            }
 
-        // Guardamos el total antes de limpiar el carrito
-        totalPagado = getTotal();
+            int id = Integer.parseInt(idProducto.toString());
 
-        System.out.println("----- PAGO PROCESADO -----");
-        System.out.println("Cliente: " + nombre);
-        System.out.println("Correo: " + correo);
-        System.out.println("Dirección: " + direccion);
-        System.out.println("Método Pago: " + metodoPago);
-        System.out.println("Total Pagado: " + totalPagado);
+            ProductoDAO dao = new ProductoDAO();
+            Producto p = dao.obtenerPorId(id);
 
-        // Limpiar carrito después
-        carrito.clear();
+            if (p == null) {
+                System.out.println("Producto no encontrado: " + id);
+                return;
+            }
 
-        return "confirmacion?faces-redirect=true";
+            agregar(p);
+
+        } catch (Exception e) {
+            System.out.println("Error agregarPorId: " + e.getMessage());
+        }
     }
+
+    // ELIMINAR
+    public void eliminar(int idProducto) {
+        carrito.removeIf(i -> i.getProducto().getId() == idProducto);
+        calcularTotal();
+    }
+
+    // TOTAL
+    private void calcularTotal() {
+        total = carrito.stream().mapToDouble(ItemCarrito::getSubtotal).sum();
+    }
+
+    public String finalizarCompra() {
+
+        // Revisar si existe "user" en sesión (login correcto)
+        String userSession = (String) FacesContext.getCurrentInstance()
+                .getExternalContext()
+                .getSessionMap()
+                .get("user");
+
+        // NO está logueado → enviar al login2 y guardar a dónde debe volver
+        if (userSession == null) {
+
+            FacesContext.getCurrentInstance().getExternalContext()
+                    .getSessionMap()
+                    .put("redireccionDespuesLogin", "metodopago.xhtml");
+
+            return "login.xhtml?faces-redirect=true";
+        }
+
+        // YA está logueado → continuar a método de pago
+        return "metodopago.xhtml?faces-redirect=true";
+    }
+
+    public String irMetodoPago() {
+
+        String userSession = (String) FacesContext.getCurrentInstance()
+                .getExternalContext()
+                .getSessionMap()
+                .get("user");
+
+        if (userSession == null) {
+            // No logueado → enviarlo al login2
+            return "login.xhtml?faces-redirect=true";
+        }
+
+        // Logueado → permitir acceso
+        return "metodopago.xhtml?faces-redirect=true";
+    }
+
 }
