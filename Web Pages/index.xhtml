@@ -4,165 +4,177 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       lang="es">
 
-<h:head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <h:outputStylesheet library="css" name="styles.css" />
-    <title>Homecopy Papelería J&amp;D</title>
-</h:head>
+    <h:head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <h:outputStylesheet library="css" name="styles.css" />
+        <title>Homecopy Papelería J&amp;D</title>
+    </h:head>
 
-<h:body>
-    <!-- Barra de navegación -->
-    <nav>
-        <div class="nav-logo">
-            <h:graphicImage name="images/download.png" alt="Logo" />
-        </div>
-
-        <ul class="nav-links">
-            <li class="link"><h:link outcome="index" value="Principal" /></li>
-            <li id="link1" class="link"><h:outputLink value="#">Productos</h:outputLink></li>
-            <li id="link2" class="link"><h:outputLink value="#">Nosotros</h:outputLink></li>
-            <li id="link3" class="link"><h:outputLink value="#">Ubicación</h:outputLink></li>
-        </ul>
-
-        <ul class="nav-linksbtn">
-            <li><h:link outcome="login" value="Ingresar" styleClass="btn" /></li>
-            <li>
-                <button id="themeToggle" class="btn theme-btn" type="button">
-                    <span class="theme-icon">🌙</span>
-                </button>
-            </li>
-        </ul>
-    </nav>
-
-    <!-- Encabezado principal -->
-    <header class="container">
-        <div class="content">
-            <span class="blur"></span>
-            <h4>Homecopy Papelería J&amp;D</h4>
-            <h1>¡Bienvenido!</h1>
-            <p>Aquí encontrarás todo lo que necesites para tu oficina, papelería y hogar.</p>
-            <h:outputLink value="#" styleClass="btn main-btn">¡Empecemos!</h:outputLink>
-        </div>
-        <div class="image parallax">
-            <h:graphicImage name="images/image.png" alt="Imagen principal" />
-        </div>
-    </header>
-
-    <!-- Sección Productos -->
-    <section class="container fade-in-section">
-        <h2 class="header">Productos</h2>
-        <div class="product1">
-            <div class="card1">
-                <h4>Productos</h4>
-                <p>
-                    Te invitamos a mirar nuestro catálogo de productos Homecopy, productos de alta calidad
-                    que ayudan a solucionar tu vida.
-                </p>
-                <h:graphicImage name="images/product.png" alt="Productos" styleClass="cardimages1" />
-            </div>
-        </div>
-    </section>
-
-    <!-- Sección Nosotros -->
-    <section class="container fade-in-section">
-        <h2 class="header">Nosotros</h2>
-        <div class="product">
-            <div class="card">
-                <h4>¿Quiénes somos?</h4>
-                <p>
-                    Somos HOMECOPY PAPELERÍA, un negocio de barrio con más de 7 años de experiencia ofreciendo
-                    productos de calidad para estudiantes, oficinas y el hogar.
-                    Nos caracterizamos por nuestra atención cercana, precios justos y variedad de artículos escolares y de oficina.
-                    Desde nuestros inicios, nos hemos comprometido a brindar un servicio amable y soluciones prácticas para la comunidad.
-                    <br /><br />
-                    ¡Gracias por confiar en nosotros y ser parte de nuestra historia! 🎨📚✏️
-                </p>
-                <h:graphicImage name="images/quienesSomos.png" alt="Nosotros" styleClass="cardimages" />
-            </div>
-
-            <div class="card">
-                <h4>Nuestros Valores</h4>
-                <p>
-                    <strong>1 - Compromiso con la Comunidad 🏡✨</strong><br />
-                    Nos esforzamos por ser un negocio cercano, brindando soluciones accesibles y de calidad para estudiantes,
-                    profesionales y familias del barrio.
-                </p>
-                <p>
-                    <strong>2 - Atención Personalizada 😊🤝</strong><br />
-                    Creemos en la importancia de un trato amable y cercano, ayudando a cada cliente a encontrar justo lo que necesita.
-                </p>
-                <p>
-                    <strong>3 - Innovación y Adaptabilidad 🔄💡</strong><br />
-                    Nos mantenemos al día con las necesidades de nuestros clientes, incorporando nuevas tendencias y herramientas
-                    para mejorar su experiencia.
-                </p>
-                <h:graphicImage name="images/valores.png" alt="Valores" styleClass="cardimages" />
-            </div>
-
-            <div class="card">
-                <h4>Misión</h4>
-                <p>
-                    Nuestra misión es proporcionar a la comunidad productos de calidad para el estudio, la oficina y el hogar,
-                    con un servicio amable, cercano y confiable.
-                    Nos esforzamos por ser un aliado en el día a día de nuestros clientes, ofreciendo variedad, buenos precios y
-                    soluciones prácticas que faciliten sus actividades académicas y laborales.
-                </p>
-                <h:graphicImage name="images/mision.jpg" alt="Misión" styleClass="cardimages" />
-            </div>
-        </div>
-    </section>
-
-    <!-- Sección Ubicación -->
-    <section class="container2 fade-in-section">
-        <h2 class="header">Ubicación</h2>
-        <div>
-            <iframe class="maps"
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d994.2659542482676!2d-74.13613883040571!3d4.582564736529818!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9f2f57636245%3A0xfe10e215b3a01c74!2sDg.%2051b%20Sur%20%232885%2C%20Bogotá!5e0!3m2!1ses!2sco!4v1743723958251!5m2!1ses!2sco"
-                    width="600" height="450" style="border:0;" allowfullscreen="true"
-                    loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
-        </div>
-    </section>
-
-    <!-- Pie de página -->
-    <footer class="container">
-        <span class="blur"></span>
-        <span class="blur"></span>
-        <div class="column">
-            <div class="logo">
+    <h:body>
+        <!-- Barra de navegación -->
+        <nav>
+            <div class="nav-logo">
                 <h:graphicImage name="images/download.png" alt="Logo" />
             </div>
-            <p>
-                Estamos para ayudarte a encontrar lo que necesitas, no dudes en contactarnos.
-                <br />
-                Dirección: Diagonal 51B Sur # 28-85, Bogotá, Colombia
-            </p>
-            <div class="socials">
-                <h:outputLink value="https://wa.me/+573223883258">
-                    <h:graphicImage name="images/whatsapp-line.png" alt="WhatsApp" />
-                </h:outputLink>
-                <h:outputLink value="https://www.instagram.com/moralesd.22/">
-                    <h:graphicImage name="images/instagram-line.png" alt="Instagram" />
-                </h:outputLink>
-                <h:outputLink value="https://www.facebook.com/david.morales.514237">
-                    <h:graphicImage name="images/facebook-circle-line.png" alt="Facebook" />
-                </h:outputLink>
+
+            <ul class="nav-links">
+                <li class="link"><h:link outcome="index" value="Principal" /></li>
+                <li id="link1" class="link"><h:outputLink value="#">Productos</h:outputLink></li>
+                <li id="link2" class="link"><h:outputLink value="#">Nosotros</h:outputLink></li>
+                <li id="link3" class="link"><h:outputLink value="#">Ubicación</h:outputLink></li>
+            </ul>
+
+            <ul class="nav-linksbtn">
+                <li><h:link outcome="login" value="Ingresar" styleClass="btn" /></li>
+                <li>
+                    <button id="themeToggle" class="btn theme-btn" type="button">
+                        <span class="theme-icon">🌙</span>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Encabezado principal -->
+        <header class="container">
+            <div class="content">
+                <span class="blur"></span>
+                <h4>Homecopy Papelería J&amp;D</h4>
+                <h1>¡Bienvenido!</h1>
+                <p>Aquí encontrarás todo lo que necesites para tu oficina, papelería y hogar.</p>
+                <h:outputLink value="#" styleClass="btn main-btn">¡Empecemos!</h:outputLink>
             </div>
-        </div>
+            <div class="image parallax">
+                <h:graphicImage name="images/image.png" alt="Imagen principal" />
+            </div>
+        </header>
 
-        <div class="column"></div>
+        <!-- Sección Productos -->
+        <section class="container fade-in-section">
+            <h2 class="header">Productos</h2>
+            <div class="product1">
+                <div class="card1">
+                    <h4>Productos</h4>
+                    <p>
+                        Te invitamos a mirar nuestro catálogo de productos Homecopy, productos de alta calidad
+                        que ayudan a solucionar tu vida.
+                    </p>
 
-        <div class="column">
-            <h4>Horarios</h4>
-            <p>
-                Lunes a Viernes: 1:00 pm - 11:00 pm <br />
-                Sábados: 1:00 pm - 10:00 pm <br />
-                Domingos y festivos: 1:00 pm - 9:00 pm
-            </p>
-        </div>
-    </footer>
+                    <h:graphicImage name="images/product.png" alt="Productos" styleClass="cardimages1" />
 
-    <h:outputScript library="js" name="script.js" />
-</h:body>
+                    <!-- Botón normal que redirige a carrito.xhtml -->
+                    <h:form>
+                        <h:commandButton
+                            value="Ir al Carrito"
+                            action="carrito.xhtml?faces-redirect=true"
+                            style="margin-top:15px; width: 100%; padding:10px; background:#007bff; color:white; border:none; border-radius:6px; cursor:pointer;"
+                            />
+                    </h:form>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Sección Nosotros -->
+        <section class="container fade-in-section">
+            <h2 class="header">Nosotros</h2>
+            <div class="product">
+                <div class="card">
+                    <h4>¿Quiénes somos?</h4>
+                    <p>
+                        Somos HOMECOPY PAPELERÍA, un negocio de barrio con más de 7 años de experiencia ofreciendo
+                        productos de calidad para estudiantes, oficinas y el hogar.
+                        Nos caracterizamos por nuestra atención cercana, precios justos y variedad de artículos escolares y de oficina.
+                        Desde nuestros inicios, nos hemos comprometido a brindar un servicio amable y soluciones prácticas para la comunidad.
+                        <br /><br />
+                        ¡Gracias por confiar en nosotros y ser parte de nuestra historia! 🎨📚✏️
+                    </p>
+                    <h:graphicImage name="images/quienesSomos.png" alt="Nosotros" styleClass="cardimages" />
+                </div>
+
+                <div class="card">
+                    <h4>Nuestros Valores</h4>
+                    <p>
+                        <strong>1 - Compromiso con la Comunidad 🏡✨</strong><br />
+                        Nos esforzamos por ser un negocio cercano, brindando soluciones accesibles y de calidad para estudiantes,
+                        profesionales y familias del barrio.
+                    </p>
+                    <p>
+                        <strong>2 - Atención Personalizada 😊🤝</strong><br />
+                        Creemos en la importancia de un trato amable y cercano, ayudando a cada cliente a encontrar justo lo que necesita.
+                    </p>
+                    <p>
+                        <strong>3 - Innovación y Adaptabilidad 🔄💡</strong><br />
+                        Nos mantenemos al día con las necesidades de nuestros clientes, incorporando nuevas tendencias y herramientas
+                        para mejorar su experiencia.
+                    </p>
+                    <h:graphicImage name="images/valores.png" alt="Valores" styleClass="cardimages" />
+                </div>
+
+                <div class="card">
+                    <h4>Misión</h4>
+                    <p>
+                        Nuestra misión es proporcionar a la comunidad productos de calidad para el estudio, la oficina y el hogar,
+                        con un servicio amable, cercano y confiable.
+                        Nos esforzamos por ser un aliado en el día a día de nuestros clientes, ofreciendo variedad, buenos precios y
+                        soluciones prácticas que faciliten sus actividades académicas y laborales.
+                    </p>
+                    <h:graphicImage name="images/mision.jpg" alt="Misión" styleClass="cardimages" />
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Ubicación -->
+        <section class="container2 fade-in-section">
+            <h2 class="header">Ubicación</h2>
+            <div>
+                <iframe class="maps"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d994.2659542482676!2d-74.13613883040571!3d4.582564736529818!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9f2f57636245%3A0xfe10e215b3a01c74!2sDg.%2051b%20Sur%20%232885%2C%20Bogotá!5e0!3m2!1ses!2sco!4v1743723958251!5m2!1ses!2sco"
+                        width="600" height="450" style="border:0;" allowfullscreen="true"
+                        loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </section>
+
+        <!-- Pie de página -->
+        <footer class="container">
+            <span class="blur"></span>
+            <span class="blur"></span>
+            <div class="column">
+                <div class="logo">
+                    <h:graphicImage name="images/download.png" alt="Logo" />
+                </div>
+                <p>
+                    Estamos para ayudarte a encontrar lo que necesitas, no dudes en contactarnos.
+                    <br />
+                    Dirección: Diagonal 51B Sur # 28-85, Bogotá, Colombia
+                </p>
+                <div class="socials">
+                    <h:outputLink value="https://wa.me/+573223883258">
+                        <h:graphicImage name="images/whatsapp-line.png" alt="WhatsApp" />
+                    </h:outputLink>
+                    <h:outputLink value="https://www.instagram.com/moralesd.22/">
+                        <h:graphicImage name="images/instagram-line.png" alt="Instagram" />
+                    </h:outputLink>
+                    <h:outputLink value="https://www.facebook.com/david.morales.514237">
+                        <h:graphicImage name="images/facebook-circle-line.png" alt="Facebook" />
+                    </h:outputLink>
+                </div>
+            </div>
+
+            <div class="column"></div>
+
+            <div class="column">
+                <h4>Horarios</h4>
+                <p>
+                    Lunes a Viernes: 1:00 pm - 11:00 pm <br />
+                    Sábados: 1:00 pm - 10:00 pm <br />
+                    Domingos y festivos: 1:00 pm - 9:00 pm
+                </p>
+            </div>
+        </footer>
+
+        <h:outputScript library="js" name="script.js" />
+    </h:body>
 </html>

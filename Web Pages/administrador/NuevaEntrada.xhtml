@@ -6,7 +6,7 @@
       lang="es">
 
     <h:head>
-        <title>Salidas del Inventario | HomeCopy</title>
+        <title>Entrada al Inventario | HomeCopy</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
@@ -32,7 +32,7 @@
                 min-height: 100vh;
             }
 
-            /* Sidebar */
+            /* Sidebar (manteniendo tus estilos) */
             .sidebar {
                 position: fixed;
                 top: 0;
@@ -204,28 +204,6 @@
                 box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
             }
 
-            .btn-secondary {
-                background: linear-gradient(135deg, var(--gray), #7f8c8d);
-                color: white;
-                border: none;
-                padding: 12px 30px;
-                border-radius: 10px;
-                font-weight: 600;
-                font-size: 1rem;
-                cursor: pointer;
-                transition: all 0.3s ease;
-                display: inline-flex;
-                align-items: center;
-                gap: 8px;
-                text-decoration: none;
-                margin-left: 10px;
-            }
-
-            .btn-secondary:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 6px 20px rgba(127, 140, 141, 0.4);
-            }
-
             /* Tabla Modernizada */
             .modern-table {
                 background: white;
@@ -268,32 +246,27 @@
             }
 
             /* Badges para la tabla */
-            .status-badge {
-                padding: 6px 12px;
+            .stock-badge {
+                padding: 4px 12px;
                 border-radius: 20px;
                 font-size: 0.8rem;
                 font-weight: 600;
                 display: inline-block;
             }
 
-            .status-danado {
-                background: #f8d7da;
-                color: var(--danger);
-            }
-
-            .status-vencido {
-                background: #fff3cd;
-                color: var(--warning);
-            }
-
-            .status-venta {
+            .stock-high {
                 background: #d5f4e1;
                 color: var(--success);
             }
 
-            .status-otro {
-                background: #d1ecf1;
-                color: var(--secondary);
+            .stock-medium {
+                background: #fff3cd;
+                color: var(--warning);
+            }
+
+            .stock-low {
+                background: #f8d7da;
+                color: var(--danger);
             }
 
             /* Inputs Modernizados */
@@ -345,22 +318,6 @@
                 color: #d1d5db;
             }
 
-            /* Animación de entrada */
-            .fade-in {
-                animation: fadeIn 0.5s ease-in-out;
-            }
-
-            @keyframes fadeIn {
-                from {
-                    opacity: 0;
-                    transform: translateY(20px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-
             /* Responsive */
             @media (max-width: 768px) {
                 .page-header {
@@ -381,6 +338,8 @@
                     padding: 15px;
                 }
             }
+
+
         </style>
     </h:head>
 
@@ -421,28 +380,27 @@
             <div class="page-header">
                 <div>
                     <h1 class="page-title">Gestión de Inventario</h1>
-                    <p class="page-subtitle">Registrar salidas del inventario</p>
+                    <p class="page-subtitle">Registrar nuevas entradas al inventario</p>
                 </div>
             </div>
 
-            <!-- Formulario de Salida -->
-            <h:form id="formSalida">
+            <!-- Formulario de Entrada -->
+            <h:form id="formEntrada">
                 <p:growl id="msgs" showDetail="true" sticky="false" life="5000"/>
 
-                <p:panel styleClass="modern-panel fade-in" header="Registrar Salida del Inventario">
+                <p:panel styleClass="modern-panel fade-in" header="Nueva Entrada al Inventario">
                     <div class="modern-grid">
                         <!-- PRODUCTO -->
                         <div class="form-group">
                             <label class="form-label">
                                 <i class="fas fa-cube"></i> Producto
                             </label>
-                            <p:selectOneMenu value="#{salidaInventarioBean.salida.idProducto}" 
+                            <p:selectOneMenu value="#{entradaInventarioBean.entrada.idProducto}" 
                                              style="width:100%" 
                                              required="true"
-                                             requiredMessage="Seleccione un producto"
-                                             filter="true" filterMatchMode="contains">
+                                             requiredMessage="Seleccione un producto">
                                 <f:selectItem itemLabel="Seleccione un producto" itemValue=""/>
-                                <f:selectItems value="#{salidaInventarioBean.listaProductos}" var="p"
+                                <f:selectItems value="#{entradaInventarioBean.listaProductos}" var="p"
                                                itemLabel="#{p.nombre}" itemValue="#{p.id}"/>
                             </p:selectOneMenu>
                         </div>
@@ -452,43 +410,21 @@
                             <label class="form-label">
                                 <i class="fas fa-boxes"></i> Cantidad
                             </label>
-                            <p:inputNumber value="#{salidaInventarioBean.salida.cantidad}" 
-                                           required="true"
-                                           requiredMessage="Ingrese la cantidad"
-                                           decimalPlaces="0"
-                                           minValue="1"
-                                           placeholder="Ej: 10"
-                                           style="width:100%"/>
+                            <p:inputText value="#{entradaInventarioBean.entrada.cantidad}" 
+                                         required="true"
+                                         requiredMessage="Ingrese la cantidad"
+                                         placeholder="Ej: 100"/>
                         </div>
 
-                        <!-- ESTADO -->
+                        <!-- PRECIO -->
                         <div class="form-group">
                             <label class="form-label">
-                                <i class="fas fa-info-circle"></i> Estado
+                                <i class="fas fa-dollar-sign"></i> Precio Unitario
                             </label>
-                            <p:selectOneMenu value="#{salidaInventarioBean.salida.estado}" 
-                                             style="width:100%" 
-                                             required="true"
-                                             requiredMessage="Seleccione un estado">
-                                <f:selectItem itemLabel="Seleccione el estado" itemValue=""/>
-                                <f:selectItem itemLabel="Dañado" itemValue="Dañado"/>
-                                <f:selectItem itemLabel="Vencido" itemValue="Vencido"/>
-                                <f:selectItem itemLabel="Venta" itemValue="Venta"/>
-                                <f:selectItem itemLabel="Otro" itemValue="Otro"/>
-                            </p:selectOneMenu>
-                        </div>
-
-                        <!-- FECHA -->
-                        <div class="form-group">
-                            <label class="form-label">
-                                <i class="fas fa-calendar-alt"></i> Fecha de Salida
-                            </label>
-                            <p:datePicker value="#{salidaInventarioBean.salida.fechaSalida}" 
-                                          pattern="yyyy-MM-dd"
-                                          showIcon="true"
-                                          required="true"
-                                          style="width:100%"
-                                          placeholder="Seleccione fecha"/>
+                            <p:inputText value="#{entradaInventarioBean.entrada.precio}" 
+                                         required="true"
+                                         requiredMessage="Ingrese el precio"
+                                         placeholder="Ej: 25.50"/>
                         </div>
 
                         <!-- CC USUARIO -->
@@ -496,28 +432,30 @@
                             <label class="form-label">
                                 <i class="fas fa-id-card"></i> Cédula Usuario
                             </label>
-                            <p:inputText value="#{salidaInventarioBean.salida.ccUsuario}" 
+                            <p:inputText value="#{entradaInventarioBean.entrada.ccUsuario}" 
                                          required="true"
                                          requiredMessage="Ingrese la cédula"
                                          placeholder="Ej: 123456789"/>
                         </div>
 
-                        <!-- OBSERVACIONES -->
-                        <div class="form-group" style="grid-column: 1 / -1;">
+                        <!-- FECHA -->
+                        <div class="form-group">
                             <label class="form-label">
-                                <i class="fas fa-sticky-note"></i> Observaciones
+                                <i class="fas fa-calendar-alt"></i> Fecha de Entrada
                             </label>
-                            <p:inputTextarea value="#{salidaInventarioBean.salida.observaciones}"
-                                             rows="3"
-                                             autoResize="true"
-                                             placeholder="Detalle adicional de la salida"
-                                             style="width:100%"/>
+                            <p:datePicker value="#{entradaInventarioBean.entrada.fechaEntrada}" 
+                                          showTime="true"
+                                          hourFormat="24"
+                                          required="true"
+                                          pattern="yyyy-MM-dd HH:mm"
+                                          style="width:100%"
+                                          placeholder="Seleccione fecha y hora"/>
                         </div>
                     </div>
 
-                    <p:commandButton value="Registrar Salida"
-                                     action="#{salidaInventarioBean.registrar}"
-                                     update="msgs formSalida :tablaSalidas"
+                    <p:commandButton value="Registrar Entrada"
+                                     actionListener="#{entradaInventarioBean.registrarEntrada}"
+                                     update="msgs formEntrada :tablaEntradas"
                                      process="@form"
                                      icon="pi pi-save"
                                      styleClass="modern-button"/>
@@ -525,53 +463,57 @@
                 </p:panel>
             </h:form>
 
-            <!-- Tabla de Salidas Registradas -->
+            <!-- Tabla de Entradas Registradas -->
             <div class="fade-in">
-                <p:dataTable  id="tablaSalidas"
-                              value="#{salidaInventarioBean.listaSalidas}"
-                              var="s"
+                <p:dataTable  id="tablaEntradas"
+                              value="#{entradaInventarioBean.listaEntradas}"
+                              var="e"
                               paginator="true"
                               rows="10"
                               styleClass="modern-table"
-                              emptyMessage="No hay salidas registradas.">
+                              emptyMessage="No hay entradas registradas.">
 
                     <f:facet name="header">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span>Historial de Salidas Registradas</span>
+                            <span>Historial de Entradas Registradas</span>
                             <span class="ui-column-title" style="font-size: 0.9rem; color: rgba(255,255,255,0.8);">
-                                <i class="fas fa-history"></i> Total: #{salidaInventarioBean.listaSalidas.size()} registros
+                                <i class="fas fa-history"></i> Total: #{entradaInventarioBean.listaEntradas.size()} registros
                             </span>
                         </div>
                     </f:facet>
 
-                    <p:column headerText="ID Salida" style="width: 100px;">
-                        <h:outputText value="#{s.id}" style="font-weight: 600; color: var(--primary);"/>
+                    <p:column headerText="ID Entrada" style="width: 100px;">
+                        <h:outputText value="#{e.id}" style="font-weight: 600; color: var(--primary);"/>
                     </p:column>
 
-                    <p:column headerText="Producto" filterBy="#{s.nombreProducto}">
+                    <p:column headerText="Producto" filterBy="#{e.nombreProducto}">
                         <div style="display: flex; align-items: center; gap: 10px;">
                             <i class="fas fa-cube" style="color: var(--primary);"></i>
                             <div>
-                                <div style="font-weight: 600;">#{s.nombreProducto}</div>
-                                <div style="font-size: 0.8rem; color: var(--gray);">ID: #{s.idProducto}</div>
+                                <div style="font-weight: 600;">#{e.nombreProducto}</div>
+                                <div style="font-size: 0.8rem; color: var(--gray);">ID: #{e.idProducto}</div>
                             </div>
                         </div>
                     </p:column>
 
                     <p:column headerText="Cantidad" style="text-align: center; width: 120px;">
-                        <span style="font-weight: 600; color: var(--danger);">
-                            #{s.cantidad} unidades
+                        <span class="stock-badge #{e.cantidad > 50 ? 'stock-high' : e.cantidad > 20 ? 'stock-medium' : 'stock-low'}">
+                            #{e.cantidad} unidades
                         </span>
                     </p:column>
 
-                    <p:column headerText="Estado" style="text-align: center; width: 130px;">
-                        <span class="status-badge #{s.estado == 'Dañado' ? 'status-danado' : s.estado == 'Vencido' ? 'status-vencido' : s.estado == 'Venta' ? 'status-venta' : 'status-otro'}">
-                            #{s.estado}
-                        </span>
+                    <p:column headerText="Stock Actual" style="text-align: center; width: 120px;">
+                        <h:outputText value="#{e.stockActual}" style="font-weight: 600;"/>
                     </p:column>
 
-                    <p:column headerText="Fecha Salida" style="width: 150px;">
-                        <h:outputText value="#{s.fechaSalida}">
+                    <p:column headerText="Precio" style="text-align: right; width: 130px;">
+                        <h:outputText value="#{e.precio}">
+                            <f:convertNumber type="currency" currencySymbol="$"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Fecha Entrada" style="width: 180px;">
+                        <h:outputText value="#{e.fechaEntrada}">
                             <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
                         </h:outputText>
                     </p:column>
@@ -579,12 +521,8 @@
                     <p:column headerText="Usuario" style="width: 140px;">
                         <div style="display: flex; align-items: center; gap: 8px;">
                             <i class="fas fa-user" style="color: var(--gray);"></i>
-                            <h:outputText value="#{s.ccUsuario}"/>
+                            <h:outputText value="#{e.ccUsuario}"/>
                         </div>
-                    </p:column>
-
-                    <p:column headerText="Observaciones" style="width: 200px;">
-                        <h:outputText value="#{s.observaciones}" style="font-size: 0.9rem;"/>
                     </p:column>
 
                 </p:dataTable>

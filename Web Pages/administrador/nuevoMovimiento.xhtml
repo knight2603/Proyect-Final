@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<f:view>
+    <h:head>
+        <title>Nuevo Movimiento de Inventario</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+        <h:outputStylesheet library="css" name="dashboardusuarios.css"/>
+        
+        <style>
+            body {
+                font-family: 'Montserrat', sans-serif;
+                background-color: #f5f5f5;
+                margin: 0;
+                padding: 0;
+            }
+            
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 260px;
+                height: 100vh;
+                background: linear-gradient(180deg, #2c3e50, #34495e);
+                color: white;
+                padding: 20px 0;
+                box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+                z-index: 1000;
+            }
+            
+            .sidebar-header {
+                text-align: center;
+                margin-bottom: 30px;
+                padding: 0 15px;
+            }
+            
+            .sidebar-header img {
+                max-width: 80px;
+                margin-bottom: 10px;
+            }
+            
+            .sidebar-header span {
+                display: block;
+                font-weight: 600;
+                font-size: 14px;
+                color: white;
+            }
+            
+            .sidebar-menu {
+                padding: 0 15px;
+            }
+            
+            .sidebar-menu a {
+                display: flex;
+                align-items: center;
+                padding: 12px 15px;
+                color: #ecf0f1;
+                text-decoration: none;
+                margin: 5px 0;
+                border-radius: 6px;
+                transition: all 0.3s ease;
+            }
+            
+            .sidebar-menu a:hover,
+            .sidebar-menu a.active {
+                background-color: rgba(255,255,255,0.1);
+                color: white;
+            }
+            
+            .sidebar-menu i {
+                width: 20px;
+                margin-right: 10px;
+                text-align: center;
+            }
+            
+            .sidebar-footer {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                padding: 15px;
+                text-align: center;
+                border-top: 1px solid rgba(255,255,255,0.2);
+                background-color: rgba(0,0,0,0.1);
+            }
+            
+            .user-info h3 {
+                margin: 0 0 5px 0;
+                color: #fff;
+                font-size: 16px;
+                font-weight: 600;
+            }
+            
+            .user-info h4 {
+                margin: 0;
+                color: #ecf0f1;
+                font-size: 14px;
+                font-weight: 500;
+            }
+            
+            .main-content {
+                margin-left: 260px;
+                padding: 30px;
+                min-height: 100vh;
+            }
+            
+            .form-container {
+                background: white;
+                border-radius: 12px;
+                padding: 40px;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+                max-width: 600px;
+                margin: 0 auto;
+            }
+            
+            .form-title {
+                text-align: center;
+                color: #1f2937;
+                font-size: 28px;
+                font-weight: 700;
+                margin-bottom: 10px;
+            }
+            
+            .form-subtitle {
+                text-align: center;
+                color: #6b7280;
+                margin-bottom: 30px;
+                font-size: 16px;
+            }
+            
+            .form-group {
+                margin-bottom: 20px;
+            }
+            
+            .form-label {
+                display: block;
+                margin-bottom: 8px;
+                font-weight: 600;
+                color: #374151;
+                font-size: 14px;
+            }
+            
+            .required {
+                color: #dc2626;
+            }
+            
+            .form-input, .form-select, .form-textarea {
+                width: 100%;
+                padding: 12px;
+                border: 1px solid #d1d5db;
+                border-radius: 8px;
+                font-size: 14px;
+                font-family: 'Montserrat', sans-serif;
+                transition: all 0.3s ease;
+                box-sizing: border-box;
+            }
+            
+            .form-input:focus, .form-select:focus, .form-textarea:focus {
+                outline: none;
+                border-color: #3b82f6;
+                box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            }
+            
+            .button-group {
+                display: flex;
+                justify-content: center;
+                gap: 15px;
+                margin-top: 30px;
+            }
+            
+            .btn-primary {
+                background: linear-gradient(135deg, #16a34a, #15803d);
+                color: white;
+                border: none;
+                border-radius: 8px;
+                padding: 12px 24px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                font-size: 14px;
+            }
+            
+            .btn-primary:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                background: linear-gradient(135deg, #15803d, #166534);
+            }
+            
+            .btn-secondary {
+                background: linear-gradient(135deg, #6b7280, #4b5563);
+                color: white;
+                border: none;
+                border-radius: 8px;
+                padding: 12px 24px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                font-size: 14px;
+            }
+            
+            .btn-secondary:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                background: linear-gradient(135deg, #4b5563, #374151);
+            }
+            
+            .error-message {
+                color: #dc2626;
+                font-size: 12px;
+                margin-top: 4px;
+                display: block;
+            }
+            
+            .user-info-panel {
+                background: #f3f4f6;
+                padding: 15px;
+                border-radius: 8px;
+                margin-bottom: 20px;
+                border-left: 4px solid #3b82f6;
+            }
+            
+            @media (max-width: 768px) {
+                .sidebar {
+                    width: 100%;
+                    height: auto;
+                    position: relative;
+                }
+                
+                .main-content {
+                    margin-left: 0;
+                    padding: 20px;
+                }
+                
+                .form-container {
+                    padding: 20px;
+                }
+                
+                .button-group {
+                    flex-direction: column;
+                }
+            }
+        </style>
+    </h:head>
+
+    <h:body>
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h:graphicImage library="img" name="download.png" alt="Logo"/>
+                <span>HOMECOPY PAPELERIA J&amp;D</span>
+            </div>
+
+            <div class="sidebar-menu">
+                <h:link outcome="/admin.xhtml">
+                    <i class="fas fa-home"></i><span>Dashboard</span>
+                </h:link>
+                <h:link outcome="/administrador/inventario.xhtml" styleClass="active">
+                    <i class="fas fa-box"></i><span>Inventario</span>
+                </h:link>
+                <h:link outcome="/administrador/proveedores.xhtml">
+                    <i class="fas fa-truck"></i><span>Proveedores</span>
+                </h:link>
+                <h:link outcome="/administrador/categorias.xhtml">
+                    <i class="fas fa-tags"></i><span>Categorías</span>
+                </h:link>
+                <h:link outcome="/administrador/usuarios.xhtml">
+                    <i class="fas fa-users"></i><span>Usuarios</span>
+                </h:link>
+                <h:link outcome="/administrador/correos.xhtml">
+                    <i class="fas fa-envelope"></i><span>Correos</span>
+                </h:link>
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <h3>Bienvenido</h3>
+                    <h4>Administrador #{sessionScope.user}</h4>
+                </div>
+
+                <h:form>
+                    <h:commandLink action="#{usuarioBean.cerrarSesion}" 
+                                   style="display:inline-block;background:linear-gradient(135deg, #dc3545, #c82333);color:white;
+                                   padding:8px 16px;border-radius:6px;text-decoration:none;font-weight:500;"
+                                   onmouseover="this.style.background = 'linear-gradient(135deg, #c82333, #a71e2a)'"
+                                   onmouseout="this.style.background = 'linear-gradient(135deg, #dc3545, #c82333)'">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span style="margin-left:6px;">Cerrar Sesión</span>
+                    </h:commandLink>
+                </h:form>
+            </div>
+        </div>
+
+        <!-- Contenido principal -->
+        <div class="main-content">
+            <!-- Mensajes -->
+            <p:growl id="mensajes" showDetail="true" life="4000"/>
+
+            <div class="form-container">
+                <h1 class="form-title">Nuevo Movimiento de Inventario</h1>
+                <p class="form-subtitle">Registre un nuevo movimiento en el sistema</p>
+
+                <!-- Información del usuario logueado -->
+                <div class="user-info-panel">
+                    <strong>Usuario:</strong> #{movimientosBean.nombreUsuarioLogueado}<br/>
+                    <strong>Fecha y Hora:</strong> 
+                    <h:outputText value="#{movimientosBean.nuevoMovimiento.fechaMovimiento}">
+                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </div>
+
+                <h:form id="formMovimiento">
+                    
+                    <!-- ✅ Producto - CORREGIDO: agregué converter para número -->
+                    <div class="form-group">
+                        <h:outputLabel for="idProducto" value="ID del Producto *" styleClass="form-label"/>
+                        <p:inputText id="idProducto"
+                                   value="#{movimientosBean.nuevoMovimiento.idProducto}" 
+                                   styleClass="form-input"
+                                   placeholder="Ingrese el ID del producto"
+                                   required="true"
+                                   requiredMessage="El ID del producto es obligatorio">
+                            <f:convertNumber integerOnly="true" />
+                        </p:inputText>
+                        <p:message for="idProducto" styleClass="error-message" />
+                    </div>
+
+                    <!-- ✅ Tipo de Movimiento - Lista Desplegable - CORREGIDO: valores explícitos -->
+                    <div class="form-group">
+                        <h:outputLabel for="tipoMovimiento" value="Tipo de Movimiento *" styleClass="form-label"/>
+                        <p:selectOneMenu id="tipoMovimiento"
+                                       value="#{movimientosBean.nuevoMovimiento.tipoMovimiento}"
+                                       styleClass="form-select"
+                                       required="true"
+                                       requiredMessage="Seleccione un tipo de movimiento">
+                            <f:selectItem itemLabel="Seleccione tipo..." itemValue="" />
+                            <f:selectItem itemLabel="ENTRADA" itemValue="ENTRADA" />
+                            <f:selectItem itemLabel="SALIDA" itemValue="SALIDA" />
+                            <f:selectItem itemLabel="PROMOCION" itemValue="PROMOCION" />
+                            <f:selectItem itemLabel="DEVOLUCION" itemValue="DEVOLUCION" />
+                            <f:selectItem itemLabel="DESCUENTO" itemValue="DESCUENTO" />
+                        </p:selectOneMenu>
+                        <p:message for="tipoMovimiento" styleClass="error-message" />
+                    </div>
+
+                    <!-- ✅ Cantidad - CORREGIDO: agregué converter para número -->
+                    <div class="form-group">
+                        <h:outputLabel for="cantidad" value="Cantidad *" styleClass="form-label"/>
+                        <p:inputText id="cantidad"
+                                   value="#{movimientosBean.nuevoMovimiento.cantidad}" 
+                                   styleClass="form-input"
+                                   placeholder="Ingrese la cantidad"
+                                   required="true"
+                                   requiredMessage="La cantidad es obligatoria">
+                            <f:convertNumber integerOnly="true" />
+                        </p:inputText>
+                        <p:message for="cantidad" styleClass="error-message" />
+                    </div>
+
+                    <!-- ✅ Proveedor - Lista Desplegable - CORREGIDO: converter para número -->
+                    <div class="form-group">
+                        <h:outputLabel for="idProveedor" value="Proveedor" styleClass="form-label"/>
+                        <p:selectOneMenu id="idProveedor"
+                                       value="#{movimientosBean.nuevoMovimiento.idProveedor}"
+                                       styleClass="form-select">
+                            <f:selectItem itemLabel="Seleccione proveedor..." itemValue="#{null}" />
+                            <f:selectItems value="#{movimientosBean.listaProveedores}" 
+                                         var="proveedor"
+                                         itemLabel="#{proveedor.nombre}" 
+                                         itemValue="#{proveedor.id}" />
+                        </p:selectOneMenu>
+                    </div>
+
+                    <!-- ✅ Observaciones -->
+                    <div class="form-group">
+                        <h:outputLabel for="observaciones" value="Observaciones" styleClass="form-label"/>
+                        <p:inputTextarea id="observaciones"
+                                       value="#{movimientosBean.nuevoMovimiento.observaciones}" 
+                                       styleClass="form-textarea"
+                                       placeholder="Observaciones adicionales (opcional)"
+                                       rows="3"
+                                       maxlength="200"/>
+                        <p:message for="observaciones" styleClass="error-message" />
+                    </div>
+
+                    <div class="button-group">
+                        <!-- ✅ Botón corregido: agregué oncomplete para debug -->
+                        <p:commandButton value="Registrar Movimiento" 
+                                       action="#{movimientosBean.agregarMovimiento}"
+                                       icon="pi pi-save"
+                                       update="mensajes formMovimiento"
+                                       process="@form"
+                                       styleClass="btn-primary"
+                                       oncomplete="console.log('Completado: ' + args)"/>
+                        
+                        <p:button value="Cancelar" 
+                                outcome="/administrador/inventario.xhtml"
+                                styleClass="btn-secondary"/>
+                    </div>
+                    
+                </h:form>
+            </div>
+        </div>
+    </h:body>
+</f:view>
+</html>

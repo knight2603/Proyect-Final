@@ -1,0 +1,585 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      lang="es">
+
+<h:head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Método de Pago | HomeCopy Papeleria</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <style>
+        :root {
+            --primary: #243757;
+            --primary-light: #2d426b;
+            --primary-dark: #1c2b45;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --info: #3498db;
+            --dark: #1a1a2e;
+            --darker: #16213e;
+            --light: #ecf0f1;
+            --lighter: #ffffff;
+            --gray: #7f8c8d;
+            --border: #bdc3c7;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #ecf0f1 0%, #bdc3c7 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        /* Header */
+        .header {
+            background: var(--primary);
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(36, 55, 87, 0.3);
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .logo {
+            height: 45px;
+            width: auto;
+        }
+        
+        .brand-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+        }
+        
+        /* Main Content */
+        .main-content {
+            padding: 3rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .page-title {
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            font-weight: 800;
+        }
+        
+        .checkout-container {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 3rem;
+            align-items: start;
+        }
+        
+        /* Resumen de Productos */
+        .products-summary {
+            background: var(--lighter);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(36, 55, 87, 0.1);
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .products-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .product-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--light);
+            border-radius: 12px;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .product-image {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        .product-info {
+            flex: 1;
+        }
+        
+        .product-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .product-details {
+            display: flex;
+            justify-content: space-between;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        /* Métodos de Pago */
+        .payment-methods {
+            background: var(--lighter);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(36, 55, 87, 0.1);
+            position: sticky;
+            top: 2rem;
+        }
+        
+        .payment-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .payment-option {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--lighter);
+        }
+        
+        .payment-option:hover {
+            border-color: var(--primary);
+            background: rgba(36, 55, 87, 0.05);
+        }
+        
+        .payment-option.selected {
+            border-color: var(--primary);
+            background: rgba(36, 55, 87, 0.1);
+            box-shadow: 0 4px 15px rgba(36, 55, 87, 0.2);
+        }
+        
+        .payment-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        .payment-info {
+            flex: 1;
+        }
+        
+        .payment-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--primary);
+        }
+        
+        .payment-description {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .payment-radio {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border);
+            border-radius: 50%;
+            position: relative;
+        }
+        
+        .payment-option.selected .payment-radio {
+            border-color: var(--primary);
+            background: var(--primary);
+        }
+        
+        .payment-option.selected .payment-radio::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+        }
+        
+        /* Resumen de Pago */
+        .payment-summary {
+            border-top: 2px solid var(--border);
+            padding-top: 1.5rem;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding: 0.5rem 0;
+        }
+        
+        .summary-label {
+            color: var(--gray);
+        }
+        
+        .summary-value {
+            font-weight: 600;
+        }
+        
+        .summary-total {
+            border-top: 2px solid var(--border);
+            padding-top: 1rem;
+            margin-top: 1rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .pay-button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 1.2rem 2rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-top: 1.5rem;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+        }
+        
+        .pay-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.6);
+            background: #c0392b;
+        }
+        
+        .pay-button:disabled {
+            background: var(--gray);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--gray);
+        }
+        
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: var(--border);
+        }
+        
+        .back-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .back-button:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                padding: 1rem;
+            }
+            
+            .brand-name {
+                font-size: 1.4rem;
+            }
+            
+            .main-content {
+                padding: 2rem 1rem;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .checkout-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .payment-methods {
+                position: static;
+            }
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <!-- Header -->
+    <div class="header">
+        <div class="logo-container">
+            <h:graphicImage library="img" name="download.png" alt="Logo" styleClass="logo"/>
+            <span class="brand-name">HomeCopy Papelería</span>
+        </div>
+    </div>
+
+    <!-- Contenido Principal -->
+    <div class="main-content">
+        <h1 class="page-title">Finalizar Compra</h1>
+        
+        <h:form id="paymentForm">
+            <div class="checkout-container">
+                <!-- Resumen de Productos -->
+                <div class="products-summary">
+                    <h2 class="section-title">
+                        <i class="fas fa-shopping-bag"></i>
+                        Resumen de tu Pedido
+                    </h2>
+                    
+                    <div class="products-list">
+                        <ui:repeat value="#{compraBean.carrito}" var="item">
+                            <div class="product-item">
+                                <h:graphicImage value="/images/#{item.producto.imagen}" 
+                                             styleClass="product-image"
+                                             alt="#{item.producto.nombre}"/>
+                                <div class="product-info">
+                                    <div class="product-name">#{item.producto.nombre}</div>
+                                    <div class="product-details">
+                                        <span>#{item.cantidad} x 
+                                            <h:outputText value="#{item.producto.precioFinal}">
+                                                <f:convertNumber pattern="$#,##0.00"/>
+                                            </h:outputText>
+                                        </span>
+                                        <span style="font-weight: 600; color: var(--primary);">
+                                            <h:outputText value="#{item.precioTotal}">
+                                                <f:convertNumber pattern="$#,##0.00"/>
+                                            </h:outputText>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </ui:repeat>
+                    </div>
+                    
+                    <ui:fragment rendered="#{empty compraBean.carrito}">
+                        <div class="empty-state">
+                            <i class="fas fa-shopping-cart"></i>
+                            <h3>No hay productos en tu carrito</h3>
+                            <p>Agrega algunos productos antes de proceder al pago</p>
+                            <h:button outcome="/cliente/carrito.xhtml" value="Volver al Carrito" 
+                                    styleClass="back-button"/>
+                        </div>
+                    </ui:fragment>
+                </div>
+                
+                <!-- Métodos de Pago -->
+                <ui:fragment rendered="#{not empty compraBean.carrito}">
+                    <div class="payment-methods">
+                        <h2 class="section-title">
+                            <i class="fas fa-credit-card"></i>
+                            Método de Pago
+                        </h2>
+                        
+                        <div class="payment-options">
+                            <!-- Efectivo -->
+                            <div class="payment-option #{compraBean.metodoPagoSeleccionado == 1 ? 'selected' : ''}"
+                                 onclick="selectPaymentMethod(1)">
+                                <div class="payment-icon">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                </div>
+                                <div class="payment-info">
+                                    <div class="payment-name">Efectivo</div>
+                                    <div class="payment-description">Paga en efectivo al momento de la entrega</div>
+                                </div>
+                                <div class="payment-radio"></div>
+                            </div>
+                            
+                            <!-- Transferencia -->
+                            <div class="payment-option #{compraBean.metodoPagoSeleccionado == 2 ? 'selected' : ''}"
+                                 onclick="selectPaymentMethod(2)">
+                                <div class="payment-icon">
+                                    <i class="fas fa-university"></i>
+                                </div>
+                                <div class="payment-info">
+                                    <div class="payment-name">Transferencia Bancaria</div>
+                                    <div class="payment-description">Transfiere desde tu banco online</div>
+                                </div>
+                                <div class="payment-radio"></div>
+                            </div>
+                            
+                            <!-- Tarjeta -->
+                            <div class="payment-option #{compraBean.metodoPagoSeleccionado == 3 ? 'selected' : ''}"
+                                 onclick="selectPaymentMethod(3)">
+                                <div class="payment-icon">
+                                    <i class="fas fa-credit-card"></i>
+                                </div>
+                                <div class="payment-info">
+                                    <div class="payment-name">Tarjeta de Crédito/Débito</div>
+                                    <div class="payment-description">Paga con tu tarjeta de forma segura</div>
+                                </div>
+                                <div class="payment-radio"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Radio buttons ocultos para el método seleccionado -->
+                        <div style="display: none;">
+                            <h:selectOneRadio id="metodoPagoSeleccionado" 
+                                            value="#{compraBean.metodoPagoSeleccionado}"
+                                            layout="pageDirection">
+                                <f:selectItem itemValue="1" itemLabel="Efectivo"/>
+                                <f:selectItem itemValue="2" itemLabel="Transferencia"/>
+                                <f:selectItem itemValue="3" itemLabel="Tarjeta"/>
+                            </h:selectOneRadio>
+                        </div>
+                        
+                        <!-- Resumen de Pago -->
+                        <div class="payment-summary">
+                            <div class="summary-row">
+                                <span class="summary-label">Subtotal:</span>
+                                <span class="summary-value">
+                                    <h:outputText value="#{compraBean.totalCarrito}">
+                                        <f:convertNumber pattern="$#,##0.00"/>
+                                    </h:outputText>
+                                </span>
+                            </div>
+                            
+                            <div class="summary-row">
+                                <span class="summary-label">Envío:</span>
+                                <span class="summary-value">Gratis</span>
+                            </div>
+                            
+                            <div class="summary-row">
+                                <span class="summary-label">Impuestos:</span>
+                                <span class="summary-value">
+                                    <h:outputText value="#{compraBean.totalCarrito * 0.19}">
+                                        <f:convertNumber pattern="$#,##0.00"/>
+                                    </h:outputText>
+                                </span>
+                            </div>
+                            
+                            <div class="summary-row summary-total">
+                                <span>Total:</span>
+                                <span>
+                                    <h:outputText value="#{compraBean.totalCarrito * 1.19}">
+                                        <f:convertNumber pattern="$#,##0.00"/>
+                                    </h:outputText>
+                                </span>
+                            </div>
+                            
+                            <p:commandButton value="Realizar Pago" 
+                                           action="#{compraBean.realizarPago}"
+                                           styleClass="pay-button"
+                                           disabled="#{compraBean.metodoPagoSeleccionado == 0}"
+                                           update="@form"
+                                           oncomplete="handlePaymentResponse(xhr, status, args)"/>
+                        </div>
+                    </div>
+                </ui:fragment>
+            </div>
+            
+            <p:messages id="msgs" showDetail="true" closable="true" />
+        </h:form>
+    </div>
+
+    <script>
+        // Seleccionar método de pago
+        function selectPaymentMethod(metodoId) {
+            // Actualizar la selección visual
+            document.querySelectorAll('.payment-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Encontrar la opción correcta (nth-child empieza en 1)
+            const selectedOption = document.querySelectorAll('.payment-option')[metodoId - 1];
+            if (selectedOption) {
+                selectedOption.classList.add('selected');
+            }
+            
+            // Actualizar el radio button oculto
+            const radioButtons = document.querySelectorAll('input[name="paymentForm:metodoPagoSeleccionado"]');
+            if (radioButtons[metodoId - 1]) {
+                radioButtons[metodoId - 1].checked = true;
+                
+                // Disparar evento change para que JSF actualice el valor
+                const event = new Event('change', { bubbles: true });
+                radioButtons[metodoId - 1].dispatchEvent(event);
+            }
+            
+            // Habilitar el botón de pago
+            const payButton = document.querySelector('.pay-button');
+            if (payButton) {
+                payButton.disabled = false;
+            }
+            
+            console.log('Método de pago seleccionado:', metodoId);
+        }
+        
+        
+        // Inicializar selección al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Página de métodos de pago inicializada');
+            
+            // Si ya hay un método seleccionado, mostrar visualmente
+            const selectedMethod = #{compraBean.metodoPagoSeleccionado};
+            if (selectedMethod > 0) {
+                selectPaymentMethod(selectedMethod);
+            }
+        });
+    </script>
+</h:body>
+</html>

@@ -16,88 +16,93 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
         <h:outputStylesheet library="css" name="dashboardusuarios.css" />
 
+        <!-- Chart.js para gráficas funcionales -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
         <style>
-                body {
-                    font-family: 'Montserrat', sans-serif;
-                    background-color: #f5f5f5;
-                    margin: 0;
-                    padding: 0;
-                }
+            body {
+                font-family: 'Montserrat', sans-serif;
+                background-color: #f5f5f5;
+                margin: 0;
+                padding: 0;
+            }
 
-                .sidebar {
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    width: 260px;
-                    height: 100vh;
-                    background: linear-gradient(180deg, #2c3e50, #34495e);
-                    color: white;
-                    padding: 20px 0;
-                    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-                    z-index: 1000;
-                }
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 260px;
+                height: 100vh;
+                background: linear-gradient(180deg, #2c3e50, #34495e);
+                color: white;
+                padding: 20px 0;
+                box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+                z-index: 1000;
+                transition: transform 0.3s ease;
+            }
 
-                .sidebar-header {
-                    text-align: center;
-                    margin-bottom: 30px;
-                    padding: 0 15px;
-                }
+            .sidebar-header {
+                text-align: center;
+                margin-bottom: 30px;
+                padding: 0 15px;
+            }
 
-                .sidebar-header img {
-                    max-width: 80px;
-                    margin-bottom: 10px;
-                }
+            .sidebar-header img {
+                max-width: 80px;
+                margin-bottom: 10px;
+            }
 
-                .sidebar-header span {
-                    display: block;
-                    font-weight: 600;
-                    font-size: 14px;
-                    color: white;
-                }
+            .sidebar-header span {
+                display: block;
+                font-weight: 600;
+                font-size: 14px;
+                color: white;
+            }
 
-                .sidebar-menu {
-                    padding: 0 15px;
-                }
+            .sidebar-menu {
+                padding: 0 15px;
+            }
 
-                .sidebar-menu a {
-                    display: flex;
-                    align-items: center;
-                    padding: 12px 15px;
-                    color: #ecf0f1;
-                    text-decoration: none;
-                    margin: 5px 0;
-                    border-radius: 6px;
-                    transition: all 0.3s ease;
-                }
+            .sidebar-menu a {
+                display: flex;
+                align-items: center;
+                padding: 12px 15px;
+                color: #ecf0f1;
+                text-decoration: none;
+                margin: 5px 0;
+                border-radius: 6px;
+                transition: all 0.3s ease;
+            }
 
-                .sidebar-menu a:hover,
-                .sidebar-menu a.active {
-                    background-color: rgba(255,255,255,0.1);
-                    color: white;
-                }
+            .sidebar-menu a:hover,
+            .sidebar-menu a.active {
+                background-color: rgba(255,255,255,0.1);
+                color: white;
+            }
 
-                .sidebar-menu i {
-                    width: 20px;
-                    margin-right: 10px;
-                    text-align: center;
-                }
+            .sidebar-menu i {
+                width: 20px;
+                margin-right: 10px;
+                text-align: center;
+            }
 
-                .sidebar-footer {
-                    position: absolute;
-                    bottom: 0;
-                    left: 0;
-                    right: 0;
-                    padding: 15px;
-                    text-align: center;
-                    border-top: 1px solid rgba(255,255,255,0.2);
-                    background-color: rgba(0,0,0,0.1);
-                }
+            .sidebar-footer {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                padding: 15px;
+                text-align: center;
+                border-top: 1px solid rgba(255,255,255,0.2);
+                background-color: rgba(0,0,0,0.1);
+            }
 
             /* 🔹 Contenido principal */
             .main-content {
-                flex: 1;
+                margin-left: 260px;
                 padding: 2rem;
-                overflow-y: auto;
+                min-height: 100vh;
+                transition: margin-left 0.3s ease;
             }
 
             .header {
@@ -176,14 +181,12 @@
                 font-weight: 700;
                 margin-bottom: 1rem;
             }
-            .placeholder-chart {
-                height: 200px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                color: #94a3b8;
-                border: 2px dashed #e2e8f0;
-                border-radius: 10px;
+
+            /* Gráfica funcional */
+            .chart-container {
+                position: relative;
+                height: 300px;
+                width: 100%;
             }
 
             /* 🔹 Actividad reciente */
@@ -228,14 +231,116 @@
                 color: #64748b;
                 font-size: 0.9rem;
             }
+
+            /* 🔹 Responsive Design */
+            @media (max-width: 1024px) {
+                .stats-section {
+                    grid-template-columns: 1fr;
+                }
+                
+                .chart-container {
+                    height: 250px;
+                }
+            }
+
+            @media (max-width: 768px) {
+                .sidebar {
+                    transform: translateX(-100%);
+                    width: 280px;
+                }
+                
+                .sidebar.mobile-open {
+                    transform: translateX(0);
+                }
+                
+                .main-content {
+                    margin-left: 0;
+                    padding: 1rem;
+                }
+                
+                .header {
+                    flex-direction: column;
+                    text-align: center;
+                    gap: 15px;
+                    padding: 20px;
+                }
+                
+                .cards-grid {
+                    grid-template-columns: 1fr;
+                }
+                
+                .mobile-menu-btn {
+                    display: block;
+                    position: fixed;
+                    top: 20px;
+                    left: 20px;
+                    z-index: 1001;
+                    background: #3b82f6;
+                    color: white;
+                    border: none;
+                    border-radius: 8px;
+                    padding: 10px 15px;
+                    font-size: 1.2rem;
+                    cursor: pointer;
+                    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+                }
+            }
+
+            @media (min-width: 769px) {
+                .mobile-menu-btn {
+                    display: none;
+                }
+            }
+
+            /* Overlay para móvil */
+            .sidebar-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.5);
+                z-index: 999;
+            }
+
+            .sidebar-overlay.mobile-open {
+                display: block;
+            }
+
+            /* Botón de actualizar gráfica */
+            .refresh-btn {
+                background: linear-gradient(135deg, #10b981, #059669);
+                color: white;
+                border: none;
+                padding: 8px 16px;
+                border-radius: 8px;
+                cursor: pointer;
+                font-weight: 600;
+                transition: all 0.3s ease;
+                margin-bottom: 15px;
+            }
+
+            .refresh-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+            }
         </style>
     </h:head>
 
     <h:body>
         <p:growl id="msgs" showDetail="true" life="4000" />
 
+        <!-- Botón móvil -->
+        <button class="mobile-menu-btn" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Overlay para móvil -->
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
         <!-- Sidebar -->
-        <div class="sidebar">
+        <div class="sidebar" id="sidebar">
             <div class="sidebar-header" style="text-align:center;">
                 <h:graphicImage library="img" name="download.png" alt="Logo"/>
                 <h3 style="margin-top:10px;">HOMECOPY<br/>J&amp;D</h3>
@@ -286,10 +391,10 @@
                 </div>
               <div class="stat-card stat-card-success">
                     <div class="stat-header">
-                        <span class="stat-title">Inventario</span>
+                        <span class="stat-title">Productos</span>
                         <i class="fas fa-boxes"></i>
                     </div>
-                    <div class="stat-value">#{inventarioBean.totalProductos}</div>
+                    <div class="stat-value">#{ProductoBean.totalProductos}</div>
                     <p class="stat-description">Productos disponibles</p>
                 </div>
                 <div class="stat-card stat-card-purple">
@@ -298,16 +403,21 @@
                         <i class="fas fa-tags"></i>
                     </div>
                     <div class="stat-value">#{categoriasBean.totalCategorias}</div>
-                    <p class="stat-description">Tipos de productos</p>
+                    <p class="stat-description">Tipos de categorias</p>
                 </div>
             </div>
 
             <!-- Estadísticas -->
             <div class="stats-section">
                 <div class="stats-card">
-                    <h3 class="stats-title">Gráfico de Ventas</h3>
-                    <div class="placeholder-chart">
-                        <i class="fas fa-chart-bar" style="font-size:50px;"></i>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h3 class="stats-title">Estadísticas de Ventas</h3>
+                        <button class="refresh-btn" onclick="updateChart()">
+                            <i class="fas fa-sync-alt"></i> Actualizar
+                        </button>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="salesChart"></canvas>
                     </div>
                 </div>
 
@@ -316,6 +426,8 @@
                     <p>📦 Productos: <b>#{inventarioBean.totalProductos}</b></p>
                     <p>🏷️ Categorías: <b>#{categoriasBean.totalCategorias}</b></p>
                     <p>👥 Usuarios: <b>#{usuarioBean.totalUsuarios}</b></p>
+                    <p>💰 Ventas Hoy: <b>$#{dashboardBean.ventasHoy}</b></p>
+                    <p>📊 Pedidos Activos: <b>#{dashboardBean.pedidosActivos}</b></p>
                 </div>
             </div>
 
@@ -331,6 +443,14 @@
                         <div class="activity-icon icon-warning"><i class="fas fa-user-plus"></i></div>
                         <div><b>Usuario registrado</b> - ayer</div>
                     </li>
+                    <li class="activity-item">
+                        <div class="activity-icon icon-primary"><i class="fas fa-shopping-cart"></i></div>
+                        <div><b>Nueva venta</b> realizada - hace 2 horas</div>
+                    </li>
+                    <li class="activity-item">
+                        <div class="activity-icon icon-purple"><i class="fas fa-tags"></i></div>
+                        <div><b>Categoría actualizada</b> - hace 3 horas</div>
+                    </li>
                 </ul>
             </div>
 
@@ -338,6 +458,158 @@
                 © 2025 HomeCopy J&amp;D | Panel Administrativo
             </div>
         </div>
+
+        <script>
+            // Gráfica funcional con Chart.js
+            let salesChart;
+            
+            function initializeChart() {
+                const ctx = document.getElementById('salesChart').getContext('2d');
+                
+                // Datos de ejemplo - en un caso real estos vendrían del backend
+                const data = {
+                    labels: ['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom'],
+                    datasets: [{
+                        label: 'Ventas Diarias',
+                        data: [1200, 1900, 1500, 2200, 1800, 2500, 2000],
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        borderColor: 'rgba(59, 130, 246, 1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }, {
+                        label: 'Pedidos',
+                        data: [45, 60, 50, 75, 55, 80, 65],
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        borderColor: 'rgba(16, 185, 129, 1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                };
+                
+                const config = {
+                    type: 'line',
+                    data: data,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                labels: {
+                                    font: {
+                                        family: 'Montserrat',
+                                        size: 12
+                                    }
+                                }
+                            },
+                            tooltip: {
+                                mode: 'index',
+                                intersect: false,
+                                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                                titleFont: {
+                                    family: 'Montserrat'
+                                },
+                                bodyFont: {
+                                    family: 'Montserrat'
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: 'rgba(0, 0, 0, 0.1)'
+                                },
+                                ticks: {
+                                    font: {
+                                        family: 'Montserrat'
+                                    },
+                                    callback: function(value) {
+                                        return '$' + value;
+                                    }
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    color: 'rgba(0, 0, 0, 0.1)'
+                                },
+                                ticks: {
+                                    font: {
+                                        family: 'Montserrat'
+                                    }
+                                }
+                            }
+                        },
+                        interaction: {
+                            mode: 'nearest',
+                            axis: 'x',
+                            intersect: false
+                        }
+                    }
+                };
+                
+                salesChart = new Chart(ctx, config);
+            }
+            
+            // Función para actualizar la gráfica con datos frescos
+            function updateChart() {
+                if (salesChart) {
+                    // Simular actualización de datos
+                    const newData = salesChart.data.datasets[0].data.map(value => 
+                        value + Math.floor(Math.random() * 500) - 250
+                    );
+                    const newOrders = salesChart.data.datasets[1].data.map(value => 
+                        value + Math.floor(Math.random() * 10) - 5
+                    );
+                    
+                    salesChart.data.datasets[0].data = newData;
+                    salesChart.data.datasets[1].data = newOrders;
+                    salesChart.update();
+                    
+                    // Mostrar notificación de actualización
+                    if (typeof PF !== 'undefined') {
+                        PF('msgs').renderMessage({
+                            summary: 'Gráfica Actualizada',
+                            detail: 'Los datos se han actualizado correctamente',
+                            severity: 'info'
+                        });
+                    }
+                }
+            }
+            
+            // Función para el menú móvil
+            function toggleSidebar() {
+                const sidebar = document.getElementById('sidebar');
+                const overlay = document.getElementById('sidebarOverlay');
+                const mainContent = document.querySelector('.main-content');
+                
+                sidebar.classList.toggle('mobile-open');
+                overlay.classList.toggle('mobile-open');
+                
+
+            }
+            
+            // Cerrar sidebar al hacer clic en un link en móvil
+            document.addEventListener('DOMContentLoaded', function() {
+                const sidebarLinks = document.querySelectorAll('.sidebar-menu a');
+                sidebarLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                    });
+                });
+                
+                // Inicializar gráfica cuando el DOM esté listo
+                initializeChart();
+                
+                // Ajustar en redimensionamiento
+                window.addEventListener('resize', function() {
+                    if (salesChart) {
+                        salesChart.resize();
+                    }
+                });
+            });
+        </script>
     </h:body>
 </f:view>
 </html>
