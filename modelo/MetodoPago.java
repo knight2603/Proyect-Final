@@ -1,11 +1,12 @@
-
 package modelo;
 
-
 public class MetodoPago {
-    
+
     private int id;
-    private String nombre, descripcion;
+    private String nombre;
+    private String descripcion;
+
+    // ======= CONSTRUCTORES =======
 
     public MetodoPago() {
     }
@@ -15,6 +16,8 @@ public class MetodoPago {
         this.nombre = nombre;
         this.descripcion = descripcion;
     }
+
+    // ======= GETTERS & SETTERS =======
 
     public int getId() {
         return id;
@@ -39,7 +42,4 @@ public class MetodoPago {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    
-    
-    
 }

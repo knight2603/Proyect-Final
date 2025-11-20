@@ -4,9 +4,10 @@ import java.util.Date;
 
 public class Producto {
 
-    private int id, stock, idCategoria;
+    private int id, stock;
+    private Integer idCategoria;
     private String nombre, descripcion, estado, imagen;
-    private double  precioFinal;
+    private double precioFinal;
     private Date fechaCaducidad;
 
     public int getId() {
@@ -25,14 +26,13 @@ public class Producto {
         this.stock = stock;
     }
 
-    public int getIdCategoria() {
+    public Integer getIdCategoria() {
         return idCategoria;
     }
 
-    public void setIdCategoria(int idCategoria) {
+    public void setIdCategoria(Integer idCategoria) {
         this.idCategoria = idCategoria;
     }
-
 
     public String getNombre() {
         return nombre;
@@ -40,14 +40,6 @@ public class Producto {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getDescrcipcion() {
-        return descripcion;
-    }
-
-    public void setDescrcipcion(String descrcipcion) {
-        this.descripcion = descrcipcion;
     }
 
     public String getEstado() {
@@ -90,6 +82,4 @@ public class Producto {
         this.fechaCaducidad = fechaCaducidad;
     }
 
-
-    
 }

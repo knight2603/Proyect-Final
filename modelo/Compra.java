@@ -2,55 +2,53 @@ package modelo;
 
 import java.util.Date;
 
-public class Compra{
-    
-    private int id, cc, id_metodo_pagar;
-    private double total_pagar;
+public class Compra {
+
+    private int idCompra;
+    private int ccUsuario;
+    private Date fechaCompra;
     private String estado;
-    private Date fecha_compra;
+    private int idMetodoPago;
+    private double total;
+    private String metodoPagoNombre;
 
     public Compra() {
     }
 
-    public Compra(int id, int cc, int id_metodo_pagar, double total_pagar, String estado, Date fecha_compra) {
-        this.id = id;
-        this.cc = cc;
-        this.id_metodo_pagar = id_metodo_pagar;
-        this.total_pagar = total_pagar;
+    public Compra(int idCompra, int ccUsuario, Date fechaCompra,
+            String estado, int idMetodoPago, double total) {
+
+        this.idCompra = idCompra;
+        this.ccUsuario = ccUsuario;
+        this.fechaCompra = fechaCompra;
         this.estado = estado;
-        this.fecha_compra = fecha_compra;
+        this.idMetodoPago = idMetodoPago;
+        this.total = total;
     }
 
-    public int getId() {
-        return id;
+    // GETTERS & SETTERS
+    public int getIdCompra() {
+        return idCompra;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdCompra(int idCompra) {
+        this.idCompra = idCompra;
     }
 
-    public int getCc() {
-        return cc;
+    public int getCcUsuario() {
+        return ccUsuario;
     }
 
-    public void setCc(int cc) {
-        this.cc = cc;
+    public void setCcUsuario(int ccUsuario) {
+        this.ccUsuario = ccUsuario;
     }
 
-    public int getId_metodo_pagar() {
-        return id_metodo_pagar;
+    public Date getFechaCompra() {
+        return fechaCompra;
     }
 
-    public void setId_metodo_pagar(int id_metodo_pagar) {
-        this.id_metodo_pagar = id_metodo_pagar;
-    }
-
-    public double getTotal_pagar() {
-        return total_pagar;
-    }
-
-    public void setTotal_pagar(double total_pagar) {
-        this.total_pagar = total_pagar;
+    public void setFechaCompra(Date fechaCompra) {
+        this.fechaCompra = fechaCompra;
     }
 
     public String getEstado() {
@@ -61,13 +59,27 @@ public class Compra{
         this.estado = estado;
     }
 
-    public Date getFecha_compra() {
-        return fecha_compra;
+    public int getIdMetodoPago() {
+        return idMetodoPago;
     }
 
-    public void setFecha_compra(Date fecha_compra) {
-        this.fecha_compra = fecha_compra;
+    public void setIdMetodoPago(int idMetodoPago) {
+        this.idMetodoPago = idMetodoPago;
     }
-    
-    
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
+    public String getMetodoPagoNombre() {
+        return metodoPagoNombre;
+    }
+
+    public void setMetodoPagoNombre(String metodoPagoNombre) {
+        this.metodoPagoNombre = metodoPagoNombre;
+    }
 }

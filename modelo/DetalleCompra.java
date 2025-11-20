@@ -1,47 +1,56 @@
-
 package modelo;
 
-
 public class DetalleCompra {
-    
-    private int id, id_compra, id_producto, cantidad;
-    private double precio_unitario, descuento_aplicado, subtotal;
+
+    private int idDetalle;
+    private int idCompra;
+    private int idProducto;
+    private int cantidad;
+    private double costoUnitario;
+    private double subtotal;
+
+    // (Opcional) para mostrar el nombre del producto en tablas
+    private String nombreProducto;
 
     public DetalleCompra() {
     }
 
-    public DetalleCompra(int id, int id_compra, int id_producto, int cantidad, double precio_unitario, double descuento_aplicado, double subtotal) {
-        this.id = id;
-        this.id_compra = id_compra;
-        this.id_producto = id_producto;
+    public DetalleCompra(int idDetalle, int idCompra, int idProducto, int cantidad,
+                         double costoUnitario, double subtotal) {
+        this.idDetalle = idDetalle;
+        this.idCompra = idCompra;
+        this.idProducto = idProducto;
         this.cantidad = cantidad;
-        this.precio_unitario = precio_unitario;
-        this.descuento_aplicado = descuento_aplicado;
+        this.costoUnitario = costoUnitario;
         this.subtotal = subtotal;
     }
 
-    public int getId() {
-        return id;
+    // =======================
+    // GETTERS & SETTERS
+    // =======================
+
+    public int getIdDetalle() {
+        return idDetalle;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdDetalle(int idDetalle) {
+        this.idDetalle = idDetalle;
     }
 
-    public int getId_compra() {
-        return id_compra;
+    public int getIdCompra() {
+        return idCompra;
     }
 
-    public void setId_compra(int id_compra) {
-        this.id_compra = id_compra;
+    public void setIdCompra(int idCompra) {
+        this.idCompra = idCompra;
     }
 
-    public int getId_producto() {
-        return id_producto;
+    public int getIdProducto() {
+        return idProducto;
     }
 
-    public void setId_producto(int id_producto) {
-        this.id_producto = id_producto;
+    public void setIdProducto(int idProducto) {
+        this.idProducto = idProducto;
     }
 
     public int getCantidad() {
@@ -52,20 +61,12 @@ public class DetalleCompra {
         this.cantidad = cantidad;
     }
 
-    public double getPrecio_unitario() {
-        return precio_unitario;
+    public double getCostoUnitario() {
+        return costoUnitario;
     }
 
-    public void setPrecio_unitario(double precio_unitario) {
-        this.precio_unitario = precio_unitario;
-    }
-
-    public double getDescuento_aplicado() {
-        return descuento_aplicado;
-    }
-
-    public void setDescuento_aplicado(double descuento_aplicado) {
-        this.descuento_aplicado = descuento_aplicado;
+    public void setCostoUnitario(double costoUnitario) {
+        this.costoUnitario = costoUnitario;
     }
 
     public double getSubtotal() {
@@ -75,7 +76,12 @@ public class DetalleCompra {
     public void setSubtotal(double subtotal) {
         this.subtotal = subtotal;
     }
-    
-    
-    
+
+    public String getNombreProducto() {
+        return nombreProducto;
+    }
+
+    public void setNombreProducto(String nombreProducto) {
+        this.nombreProducto = nombreProducto;
+    }
 }

@@ -3,10 +3,12 @@ package modelo;
 import java.util.Date;
 
 public class Entradainventario {
-    
-    private int id, cantidad, id_producto, cc_usurios;
+
+    private int id, cantidad, idProducto, CcUsuario;
     private double precio;
-    private Date fecha_entrada;
+    private Date FechaEntrada;
+    private String nombreProducto;
+    private int stockActual;
 
     public int getId() {
         return id;
@@ -24,20 +26,20 @@ public class Entradainventario {
         this.cantidad = cantidad;
     }
 
-    public int getId_producto() {
-        return id_producto;
+    public int getIdProducto() {
+        return idProducto;
     }
 
-    public void setId_producto(int id_producto) {
-        this.id_producto = id_producto;
+    public void setIdProducto(int idProducto) {
+        this.idProducto = idProducto;
     }
 
-    public int getCc_usurios() {
-        return cc_usurios;
+    public int getCcUsuario() {
+        return CcUsuario;
     }
 
-    public void setCc_usurios(int cc_usurios) {
-        this.cc_usurios = cc_usurios;
+    public void setCcUsuario(int Ccusurio) {
+        this.CcUsuario = Ccusurio;
     }
 
     public double getPrecio() {
@@ -48,16 +50,29 @@ public class Entradainventario {
         this.precio = precio;
     }
 
-    public Date getFecha_entrada() {
-        return fecha_entrada;
+    public Date getFechaEntrada() {
+        return FechaEntrada;
     }
 
-    public void setFecha_entrada(Date fecha_entrada) {
-        this.fecha_entrada = fecha_entrada;
+    public void setFechaEntrada(Date FechaEntrada) {
+        this.FechaEntrada = FechaEntrada;
     }
-    
-    
-    
-    
+
+    public String getNombreProducto() {
+        return nombreProducto;
+    }
+
+    public void setNombreProducto(String nombreProducto) {
+        this.nombreProducto = nombreProducto;
+    }
+
+    public int getStockActual() {
+        return stockActual;
+    }
+
+    public void setStockActual(int stockActual) {
+        this.stockActual = stockActual;
+    }
+
     
 }

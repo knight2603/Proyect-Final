@@ -1,12 +1,37 @@
-
 package modelo;
 
+import java.io.Serializable;
+import java.util.Date;
 
-public class SalidaInventario {
-    
-    private int id, id_producto, cantidad, cc_usuarios;
-    private String estado, observaciones;
+public class SalidaInventario implements Serializable {
 
+    private int id;
+    private int idProducto;
+    private int cantidad;
+    private String estado;
+    private Date fechaSalida;
+    private int ccUsuario;
+    private String observaciones;
+    private String nombreProducto;
+
+    public SalidaInventario() {
+        // evita NullPointerException al registrar salida sin fecha manual
+        this.fechaSalida = new Date();
+    }
+
+    public SalidaInventario(int id, int idProducto, int cantidad, String estado, Date fechaSalida, int ccUsuario, String observaciones) {
+        this.id = id;
+        this.idProducto = idProducto;
+        this.cantidad = cantidad;
+        this.estado = estado;
+        this.fechaSalida = fechaSalida != null ? fechaSalida : new Date();
+        this.ccUsuario = ccUsuario;
+        this.observaciones = observaciones;
+    }
+
+    // ============================
+    //  GETTERS & SETTERS
+    // ============================
     public int getId() {
         return id;
     }
@@ -15,12 +40,12 @@ public class SalidaInventario {
         this.id = id;
     }
 
-    public int getId_producto() {
-        return id_producto;
+    public int getIdProducto() {
+        return idProducto;
     }
 
-    public void setId_producto(int id_producto) {
-        this.id_producto = id_producto;
+    public void setIdProducto(int idProducto) {
+        this.idProducto = idProducto;
     }
 
     public int getCantidad() {
@@ -31,20 +56,28 @@ public class SalidaInventario {
         this.cantidad = cantidad;
     }
 
-    public int getCc_usuarios() {
-        return cc_usuarios;
-    }
-
-    public void setCc_usuarios(int cc_usuarios) {
-        this.cc_usuarios = cc_usuarios;
-    }
-
     public String getEstado() {
         return estado;
     }
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public Date getFechaSalida() {
+        return fechaSalida;
+    }
+
+    public void setFechaSalida(Date fechaSalida) {
+        this.fechaSalida = fechaSalida != null ? fechaSalida : new Date();
+    }
+
+    public int getCcUsuario() {
+        return ccUsuario;
+    }
+
+    public void setCcUsuario(int ccUsuario) {
+        this.ccUsuario = ccUsuario;
     }
 
     public String getObservaciones() {
@@ -54,8 +87,13 @@ public class SalidaInventario {
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
     }
-    
-    
-    
-    
+
+    public String getNombreProducto() {
+        return nombreProducto;
+    }
+
+    public void setNombreProducto(String nombreProducto) {
+        this.nombreProducto = nombreProducto;
+    }
+
 }
